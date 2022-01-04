@@ -34,9 +34,9 @@ module.exports = {
       },
       {
         test: /\.jpeg$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'url-loader',
+        loader: 'url-loader',
+        options: {
+          name: '[name].[ext]',
         },
       },
     ],

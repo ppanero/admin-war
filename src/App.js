@@ -4,27 +4,24 @@ import Enemy from './Components/Enemy';
 import Panel from './Components/Panel';
 import Player from './Components/Player';
 import TextBox from './Components/TextBox';
+// eslint-disable-next-line no-var
+const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
   return (
     <Container className="h-100">
       <Row className="panel">
         <Panel
+          imageLoader={imageLoader}
           players={[
-            'adri',
-            'angu',
             'duff',
             'facun',
-            'hector',
-            'iñigo',
             'joselu',
-            'joel',
             'luis',
             'panero',
             'rene',
             'robin',
             'sohar',
-            'xexu',
             'toni',
           ]}
         />
@@ -34,14 +31,14 @@ export default function App() {
           <div id="battle-container" className="px-2 mx-auto">
             <Enemy
               name="Mario"
-              img="../assets/img/mario.jpeg"
+              img={imageLoader('./mario.jpeg').default}
               lives={2}
               hide={false}
               faint={false}
             />
             <Player
               name="Luis"
-              img="../assets/img/luis.jpeg"
+              img={imageLoader('./luis.jpeg').default}
               lives={1}
               hide={false}
               faint={false}
