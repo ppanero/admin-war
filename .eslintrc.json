@@ -1,0 +1,27 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["airbnb", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "plugins": [
+        "prettier",
+        "react"
+    ],
+    "rules": {
+        "object-curly-newline": 0,
+        "prettier/prettier": "error",
+        "react/jsx-filename-extension": [
+            1, { "extensions": [".js", ".jsx"] }
+        ],
+        "react/jsx-one-expression-per-line": 0
+    }
+}

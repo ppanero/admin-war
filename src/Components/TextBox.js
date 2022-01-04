@@ -1,15 +1,21 @@
-import React, { Component } from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export class TextBox extends Component {
-  render() {
-    return (
-      <div className="battle-text-content">
-        <p>
-          {this.props.messageOne} <br /> {this.props.messageTwo}
-        </p>
-      </div>
-    );
-  }
+export default function TextBox({ messageOne, messageTwo }) {
+  return (
+    <div className="battle-text-content">
+      <p>
+        {messageOne} <br /> {messageTwo}
+      </p>
+    </div>
+  );
 }
 
-export default TextBox;
+TextBox.propTypes = {
+  messageOne: PropTypes.string.isRequired,
+  messageTwo: PropTypes.string,
+};
+
+TextBox.defaultProps = {
+  messageTwo: '',
+};

@@ -1,0 +1,6 @@
+# NPM files
+*package-lock.json
+/node_modules
+
+# Webpack build
+dist/

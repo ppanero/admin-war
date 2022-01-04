@@ -1,33 +1,71 @@
 {
-  "name": "battle-app",
-  "version": "0.1.0",
+  "name": "admin-war",
+  "description": "Administration raffle, with a Pokemon UI/UX",
   "private": true,
-  "homepage": "https://philyawj.github.io/react-pokemon-battle",
-  "dependencies": {
-    "aos": "^2.3.3",
-    "gh-pages": "^2.0.1",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "^3.0.1"
+  "version": "0.0.1",
+  "author": "Pablo Panero",
+  "license": "MIT",
+  "homepage": "https://ppanero.github.io/admin-war",
+  "keywords": [
+    "Raffle",
+    "Pokemon battle",
+    "React",
+    "Webpack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppanero/admin-war.git"
   },
+  "bugs": {
+    "url": "https://github.com/ppanero/admin-war/issues"
+  },
+  "main": "index.js",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src",
+    "start": "webpack serve --mode development --open --hot",
+    "build": "webpack --mode production",
+    "predeploy": "npm run install && npm run build",
+    "deploy": "gh-pages -d build"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "animate.css": "^3.7.0",
+    "aos": "^2.3.3",
+    "bootstrap": "^5.1.3",
+    "gh-pages": "^2.0.1",
+    "prop-types": "^15.8.0",
+    "react": "^16.4.2",
+    "react-bootstrap": "^2.1.0",
+    "react-dom": "^17.0.1",
+    "react-html-parser": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "autoprefixer": "^10.2.4",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "html-webpack-plugin": "^4.5.1",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^5.0.0",
+    "precss": "^4.0.0",
+    "prettier": "^2.5.1",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
