@@ -1,13 +1,36 @@
 import React from 'react';
-import TextBox from './Components/TextBox';
+import { Col, Container, Row } from 'react-bootstrap';
 import Enemy from './Components/Enemy';
+import Panel from './Components/Panel';
 import Player from './Components/Player';
+import TextBox from './Components/TextBox';
 
 export default function App() {
   return (
-    <div className="container h-100">
-      <div className="row row h-100 justify-content-center align-items-center">
-        <div className="col-sm-12">
+    <Container className="h-100">
+      <Row className="panel">
+        <Panel
+          players={[
+            'adri',
+            'angu',
+            'duff',
+            'facun',
+            'hector',
+            'iñigo',
+            'joselu',
+            'joel',
+            'luis',
+            'panero',
+            'rene',
+            'robin',
+            'sohar',
+            'xexu',
+            'toni',
+          ]}
+        />
+      </Row>
+      <Row className="justify-content-center">
+        <Col sm={12}>
           <div id="battle-container" className="px-2 mx-auto">
             <Enemy
               name="Mario"
@@ -29,8 +52,8 @@ export default function App() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }

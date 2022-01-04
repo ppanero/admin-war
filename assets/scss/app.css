@@ -76,8 +76,10 @@ h5 {
   letter-spacing: -2px; }
 
 .avatar-box {
+  margin: 7px;
   position: relative;
-  z-index: 0; }
+  z-index: 0;
+}
 
 .oval {
   width: 120px;
@@ -151,3 +153,8 @@ h5 {
   .move-pointer:hover,
   #play-again-text:hover {
     color: #c9def8; } }
+
+.panel {
+  margin: 100px 20px;
+  outline: 5px double black;
+}
