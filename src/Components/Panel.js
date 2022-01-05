@@ -9,6 +9,19 @@ export default function Panel({ players, imageLoader }) {
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
         <img className="avatar mx-2" src={img} alt="Player avatar" />
+        <div className="px-2">
+          <div className="progress both-progress">
+            <div
+              className="progress-bar bg-success"
+              role="progressbar"
+              style={{ width: '100%' }}
+              aria-valuenow="75"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="todo"
+            />
+          </div>
+        </div>
       </Col>,
     );
   });
