@@ -4,27 +4,17 @@ import Enemy from './Components/Enemy';
 import Panel from './Components/Panel';
 import Player from './Components/Player';
 import TextBox from './Components/TextBox';
+import data from '../assets/data/data.json';
 // eslint-disable-next-line no-var
 const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
+  const { players } = data;
+
   return (
     <Container className="h-100">
       <Row className="panel">
-        <Panel
-          imageLoader={imageLoader}
-          players={[
-            'duff',
-            'facun',
-            'joselu',
-            'luis',
-            'panero',
-            'rene',
-            'robin',
-            'sohar',
-            'toni',
-          ]}
-        />
+        <Panel imageLoader={imageLoader} players={Object.keys(players)} />
       </Row>
       <Row className="justify-content-center">
         <Col sm={12}>
