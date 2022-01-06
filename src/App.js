@@ -24,23 +24,24 @@ export default function App() {
 
   const battle = () => {
     if (warStarted) {
-      const playerIdx = Math.floor(Math.random() * playerNames.length);
-      let enemyIdx;
-      do {
-        enemyIdx = Math.floor(Math.random() * playerNames.length);
-      } while (enemyIdx === playerIdx);
+      setTimeout(() => {
+        const playerIdx = Math.floor(Math.random() * playerNames.length);
+        let enemyIdx;
+        do {
+          enemyIdx = Math.floor(Math.random() * playerNames.length);
+        } while (enemyIdx === playerIdx);
 
-      setPlayer(playerNames[playerIdx]);
-      const enemyName = playerNames[enemyIdx];
-      setEnemy(enemyName);
-      if (playerLives[enemyName] === 1) {
-        setPlayerNames(playerNames.filter((name) => name !== enemyName));
-      }
-      setPlayerLives({
-        ...playerLives,
-        [enemyName]: playerLives[enemyName] - 1,
-      });
-      setWarStarted(false);
+        setPlayer(playerNames[playerIdx]);
+        const enemyName = playerNames[enemyIdx];
+        setEnemy(enemyName);
+        if (playerLives[enemyName] === 1) {
+          setPlayerNames(playerNames.filter((name) => name !== enemyName));
+        }
+        setPlayerLives({
+          ...playerLives,
+          [enemyName]: playerLives[enemyName] - 1,
+        });
+      }, 2000);
     }
   };
 
