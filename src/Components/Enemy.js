@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Enemy({ name, img, lives, hide, faint }) {
+export default function Enemy({ name, img, lives, shake }) {
   // calc enemy progress bar percentage based on HP
-  const livesColor =
-    lives > 1 ? 'progress-bar bg-success' : 'progress-bar bg-danger';
-  let anim;
-  if (hide) {
-    anim = 'hide';
-  } else {
-    anim = faint ? 'animated fadeOut slow' : 'animated fadeInUp';
+  const livesColor = lives > 1 ? 'bg-success' : 'bg-danger';
+  let anim = 'animate__fadeOut slow';
+  if (shake) {
+    anim = 'animate__shakeX';
+  } else if (lives > 0) {
+    anim = 'animate__zoomIn';
   }
 
   return (
@@ -25,7 +24,7 @@ export default function Enemy({ name, img, lives, hide, faint }) {
             <h5>HP</h5>
             <div className="progress ml-1 both-progress">
               <div
-                className={livesColor}
+                className={`progress-bar ${livesColor}`}
                 role="progressbar"
                 style={{ width: `${lives * 50}%` }}
                 aria-valuenow="75"
@@ -40,7 +39,7 @@ export default function Enemy({ name, img, lives, hide, faint }) {
 
         {/* ENEMY POKEMON AVATAR PICTURE */}
         <div className="mr-sm-4 avatar-box">
-          <div className={anim}>
+          <div className={`animate__animated ${anim}`}>
             <img className="avatar mr-3 mt-4" src={img} alt="Player avatar" />
           </div>
           <div className="oval" />
@@ -53,14 +52,12 @@ export default function Enemy({ name, img, lives, hide, faint }) {
 }
 
 Enemy.propTypes = {
-  faint: PropTypes.bool,
-  hide: PropTypes.bool,
   img: PropTypes.string.isRequired,
   lives: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  shake: PropTypes.bool,
 };
 
 Enemy.defaultProps = {
-  hide: false,
-  faint: false,
+  shake: false,
 };

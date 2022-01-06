@@ -12,6 +12,7 @@ export default function App() {
   const [players] = useState(data.players);
   const [message, setMessage] = useState('');
   const [warStarted, setWarStarted] = useState(false);
+  const [battleEnd, setBattleEnd] = useState(false);
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerLives = {};
   playerNames.forEach((name) => {
@@ -27,7 +28,7 @@ export default function App() {
       const enemyIdx = Math.floor(Math.random() * playerNames.length);
       const enemyName = playerNames[enemyIdx];
       setTimeout(() => {
-        setMessage(`A wild ${enemyName} appeared!`);
+        setMessage(`Un ${enemyName} salvaje aparecio!`);
         setEnemy(enemyName);
         let playerIdx;
         do {
@@ -36,7 +37,7 @@ export default function App() {
         const playerName = playerNames[playerIdx];
 
         setTimeout(() => {
-          setMessage(`... ${playerName} will fight him!`);
+          setMessage(`... ${playerName} te elijo a ti!`);
           setPlayer(playerName);
           if (playerLives[enemyName] === 1) {
             setPlayerNames(playerNames.filter((name) => name !== enemyName));
@@ -46,6 +47,7 @@ export default function App() {
             const phrases = players[playerName];
             const phraseIdx = Math.floor(Math.random() * phrases.length);
             setMessage(phrases[phraseIdx]);
+            setBattleEnd(true);
             setPlayerLives({
               ...playerLives,
               [enemyName]: playerLives[enemyName] - 1,
@@ -64,6 +66,7 @@ export default function App() {
 
   useEffect(() => {
     setTimeout(() => {
+      setBattleEnd(false);
       setEnemy('');
       setPlayer('');
       battle();
@@ -85,8 +88,7 @@ export default function App() {
                     name={enemy.toUpperCase()}
                     img={imageLoader(`./${enemy}.jpeg`).default}
                     lives={playerLives[enemy]}
-                    hide={false}
-                    faint={false}
+                    shake={battleEnd}
                   />
                 )}
                 {player && (
@@ -94,8 +96,6 @@ export default function App() {
                     name={player.toUpperCase()}
                     img={imageLoader(`./${player}.jpeg`).default}
                     lives={playerLives[player]}
-                    hide={false}
-                    faint={false}
                   />
                 )}
                 <div className="text-container">

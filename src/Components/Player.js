@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Player({ name, img, lives, hide, faint }) {
+export default function Player({ name, img, lives }) {
   // calc player progress bar percentage based on HP
-  const livesColor =
-    lives > 1 ? 'progress-bar bg-success' : 'progress-bar bg-danger';
-  let anim;
-  if (hide) {
-    anim = 'hide';
-  } else {
-    anim = faint ? 'animated fadeOut slow' : 'animated fadeInUp';
-  }
+  const livesColor = lives > 1 ? 'bg-success' : 'bg-danger';
 
   return (
     <div>
@@ -18,7 +11,7 @@ export default function Player({ name, img, lives, hide, faint }) {
       <div id="hero-container">
         {/* HERO POKEMON AVATAR PICTURE */}
         <div className="avatar-box ml-sm-5">
-          <div className={anim}>
+          <div className="animate__animated animate__fadeInUp">
             <img className="avatar mx-2" src={img} alt="Player avatar" />
           </div>
           <div className="oval" />
@@ -34,7 +27,7 @@ export default function Player({ name, img, lives, hide, faint }) {
             <h5>HP</h5>
             <div className="progress ml-1 both-progress">
               <div
-                className={livesColor}
+                className={`progress-bar ${livesColor}`}
                 role="progressbar"
                 style={{ width: `${lives * 50}%` }}
                 aria-valuenow="75"
@@ -53,14 +46,7 @@ export default function Player({ name, img, lives, hide, faint }) {
 }
 
 Player.propTypes = {
-  faint: PropTypes.bool,
-  hide: PropTypes.bool,
   img: PropTypes.string.isRequired,
   lives: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-};
-
-Player.defaultProps = {
-  hide: false,
-  faint: false,
 };
