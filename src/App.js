@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import Enemy from './Components/Enemy';
 import Panel from './Components/Panel';
@@ -11,19 +11,26 @@ const imageLoader = require.context('../assets/img/', false);
 export default function App() {
   const { players } = data;
   const playerNames = Object.keys(players);
+  const [warStarted, setWarStarted] = useState(false);
   const [player, setPlayer] = useState('');
   const [enemy, setEnemy] = useState('');
 
-  const startWar = () => {
-    const playerIdx = Math.floor(Math.random() * playerNames.length);
-    let enemyIdx;
-    do {
-      enemyIdx = Math.floor(Math.random() * playerNames.length);
-    } while (enemyIdx === playerIdx);
+  const battle = () => {
+    if (warStarted) {
+      const playerIdx = Math.floor(Math.random() * playerNames.length);
+      let enemyIdx;
+      do {
+        enemyIdx = Math.floor(Math.random() * playerNames.length);
+      } while (enemyIdx === playerIdx);
 
-    setPlayer(playerNames[playerIdx]);
-    setEnemy(playerNames[enemyIdx]);
+      setPlayer(playerNames[playerIdx]);
+      setEnemy(playerNames[enemyIdx]);
+    }
   };
+
+  useEffect(() => {
+    battle();
+  }, [warStarted]);
 
   return (
     <Container className="h-100">
@@ -69,7 +76,7 @@ export default function App() {
             className="war-button"
             variant="primary"
             size="lg"
-            onClick={startWar}
+            onClick={() => setWarStarted(true)}
           >
             War!
           </Button>
