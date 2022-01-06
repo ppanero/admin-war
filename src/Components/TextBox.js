@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function TextBox({ messageOne, messageTwo }) {
+export default function TextBox({ message }) {
   return (
     <div className="battle-text-content">
-      <p>
-        {messageOne} <br /> {messageTwo}
-      </p>
+      <p>{message}</p>
     </div>
   );
 }
 
 TextBox.propTypes = {
-  messageOne: PropTypes.string.isRequired,
-  messageTwo: PropTypes.string,
-};
-
-TextBox.defaultProps = {
-  messageTwo: '',
+  message: PropTypes.string.isRequired,
 };

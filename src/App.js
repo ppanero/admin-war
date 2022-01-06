@@ -9,8 +9,8 @@ import data from '../assets/data/data.json';
 const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
-  const { players } = data;
-  // state variables
+  const [players] = useState(data.players);
+  const [message, setMessage] = useState('');
   const [warStarted, setWarStarted] = useState(false);
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerLives = {};
@@ -24,23 +24,34 @@ export default function App() {
 
   const battle = () => {
     if (warStarted) {
+      const enemyIdx = Math.floor(Math.random() * playerNames.length);
+      const enemyName = playerNames[enemyIdx];
       setTimeout(() => {
-        const playerIdx = Math.floor(Math.random() * playerNames.length);
-        let enemyIdx;
-        do {
-          enemyIdx = Math.floor(Math.random() * playerNames.length);
-        } while (enemyIdx === playerIdx);
-
-        setPlayer(playerNames[playerIdx]);
-        const enemyName = playerNames[enemyIdx];
+        setMessage(`A wild ${enemyName} appeared!`);
         setEnemy(enemyName);
-        if (playerLives[enemyName] === 1) {
-          setPlayerNames(playerNames.filter((name) => name !== enemyName));
-        }
-        setPlayerLives({
-          ...playerLives,
-          [enemyName]: playerLives[enemyName] - 1,
-        });
+        let playerIdx;
+        do {
+          playerIdx = Math.floor(Math.random() * playerNames.length);
+        } while (playerIdx === enemyIdx);
+        const playerName = playerNames[playerIdx];
+
+        setTimeout(() => {
+          setMessage(`... ${playerName} will fight him!`);
+          setPlayer(playerName);
+          if (playerLives[enemyName] === 1) {
+            setPlayerNames(playerNames.filter((name) => name !== enemyName));
+          }
+
+          setTimeout(() => {
+            const phrases = players[playerName];
+            const phraseIdx = Math.floor(Math.random() * phrases.length);
+            setMessage(phrases[phraseIdx]);
+            setPlayerLives({
+              ...playerLives,
+              [enemyName]: playerLives[enemyName] - 1,
+            });
+          }, 2000);
+        }, 2000);
       }, 2000);
     }
   };
@@ -52,7 +63,11 @@ export default function App() {
   }, [playerNames]);
 
   useEffect(() => {
-    battle();
+    setTimeout(() => {
+      setEnemy('');
+      setPlayer('');
+      battle();
+    }, 3000);
   }, [warStarted, playerLives]);
 
   return (
@@ -86,9 +101,7 @@ export default function App() {
                 <div className="text-container">
                   <div className="text-box">
                     <div className="text-box-content">
-                      {enemy && (
-                        <TextBox messageOne={`A wild ${enemy} appeared!`} />
-                      )}
+                      {enemy && <TextBox message={message} />}
                     </div>
                   </div>
                 </div>
