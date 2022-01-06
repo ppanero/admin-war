@@ -20,6 +20,7 @@ export default function App() {
   const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
   const [player, setPlayer] = useState('');
   const [enemy, setEnemy] = useState('');
+  const [winner, setWinner] = useState('');
 
   const battle = () => {
     if (warStarted) {
@@ -44,59 +45,85 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (playerNames.length === 1) {
+      setWinner(playerNames[0]);
+    }
+  }, [playerNames]);
+
+  useEffect(() => {
     battle();
   }, [warStarted, playerLives]);
 
   return (
     <Container className="h-100">
-      <Row className="panel">
-        <Panel imageLoader={imageLoader} playerLives={playerLives} />
-      </Row>
-      <Row className="justify-content-center battle-container">
-        <Col sm={12}>
-          <div className="px-2 mx-auto battle-box">
-            {enemy && (
-              <Enemy
-                name={enemy.toUpperCase()}
-                img={imageLoader(`./${enemy}.jpeg`).default}
-                lives={playerLives[enemy]}
-                hide={false}
-                faint={false}
-              />
-            )}
-            {player && (
-              <Player
-                name={player.toUpperCase()}
-                img={imageLoader(`./${player}.jpeg`).default}
-                lives={playerLives[player]}
-                hide={false}
-                faint={false}
-              />
-            )}
-            <div className="text-container">
-              <div className="text-box">
-                <div className="text-box-content">
-                  {enemy && (
-                    <TextBox messageOne={`A wild ${enemy} appeared!`} />
-                  )}
+      {winner === '' ? (
+        <>
+          <Row className="panel">
+            <Panel imageLoader={imageLoader} playerLives={playerLives} />
+          </Row>
+          <Row className="justify-content-center battle-container">
+            <Col sm={12}>
+              <div className="px-2 mx-auto battle-box">
+                {enemy && (
+                  <Enemy
+                    name={enemy.toUpperCase()}
+                    img={imageLoader(`./${enemy}.jpeg`).default}
+                    lives={playerLives[enemy]}
+                    hide={false}
+                    faint={false}
+                  />
+                )}
+                {player && (
+                  <Player
+                    name={player.toUpperCase()}
+                    img={imageLoader(`./${player}.jpeg`).default}
+                    lives={playerLives[player]}
+                    hide={false}
+                    faint={false}
+                  />
+                )}
+                <div className="text-container">
+                  <div className="text-box">
+                    <div className="text-box-content">
+                      {enemy && (
+                        <TextBox messageOne={`A wild ${enemy} appeared!`} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <div className="text-center">
+              <Button
+                className="war-button"
+                variant="primary"
+                size="lg"
+                onClick={() => setWarStarted(true)}
+              >
+                War!
+              </Button>
+            </div>
+          </Row>
+        </>
+      ) : (
+        <Row className="battle-container">
+          <Col sm={12}>
+            <div className="px-2 mx-auto battle-box">
+              <div className="mr-sm-4 avatar-box text-center">
+                <div className="animated fadeInUp">
+                  <img
+                    className="avatar mr-3 mt-4"
+                    src={imageLoader(`./${winner}.jpeg`).default}
+                    alt="Player avatar"
+                  />
                 </div>
               </div>
             </div>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <div className="text-center">
-          <Button
-            className="war-button"
-            variant="primary"
-            size="lg"
-            onClick={() => setWarStarted(true)}
-          >
-            War!
-          </Button>
-        </div>
-      </Row>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }
