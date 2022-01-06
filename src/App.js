@@ -1,5 +1,5 @@
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import Enemy from './Components/Enemy';
 import Panel from './Components/Panel';
 import Player from './Components/Player';
@@ -10,36 +10,70 @@ const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
   const { players } = data;
+  const playerNames = Object.keys(players);
+  const [player, setPlayer] = useState('');
+  const [enemy, setEnemy] = useState('');
+
+  const startWar = () => {
+    const playerIdx = Math.floor(Math.random() * playerNames.length);
+    let enemyIdx;
+    do {
+      enemyIdx = Math.floor(Math.random() * playerNames.length);
+    } while (enemyIdx === playerIdx);
+
+    setPlayer(playerNames[playerIdx]);
+    setEnemy(playerNames[enemyIdx]);
+  };
 
   return (
     <Container className="h-100">
       <Row className="panel">
         <Panel imageLoader={imageLoader} players={Object.keys(players)} />
       </Row>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center battle-container">
         <Col sm={12}>
-          <div id="battle-container" className="px-2 mx-auto">
-            <Enemy
-              name="Mario"
-              img={imageLoader('./mario.jpeg').default}
-              lives={2}
-              hide={false}
-              faint={false}
-            />
-            <Player
-              name="Luis"
-              img={imageLoader('./luis.jpeg').default}
-              lives={1}
-              hide={false}
-              faint={false}
-            />
-            <div id="text-box">
-              <div id="text-box-content">
-                <TextBox messageOne="A wild Mario appeared!" />
+          <div className="px-2 mx-auto battle-box">
+            {enemy && (
+              <Enemy
+                name={enemy.toUpperCase()}
+                img={imageLoader(`./${enemy}.jpeg`).default}
+                lives={2}
+                hide={false}
+                faint={false}
+              />
+            )}
+            {player && (
+              <Player
+                name={player.toUpperCase()}
+                img={imageLoader(`./${player}.jpeg`).default}
+                lives={1}
+                hide={false}
+                faint={false}
+              />
+            )}
+            <div className="text-container">
+              <div className="text-box">
+                <div className="text-box-content">
+                  {enemy && (
+                    <TextBox messageOne={`A wild ${enemy} appeared!`} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </Col>
+      </Row>
+      <Row>
+        <div className="text-center">
+          <Button
+            className="war-button"
+            variant="primary"
+            size="lg"
+            onClick={startWar}
+          >
+            War!
+          </Button>
+        </div>
       </Row>
     </Container>
   );
