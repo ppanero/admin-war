@@ -75,69 +75,68 @@ export default function App() {
 
   return (
     <Container className="h-100">
-      {winner === '' ? (
-        <>
-          <Row className="panel">
-            <Panel imageLoader={imageLoader} playerLives={playerLives} />
-          </Row>
-          <Row className="justify-content-center battle-container">
-            <Col sm={12}>
-              <div className="px-2 mx-auto battle-box">
-                {enemy && (
-                  <Enemy
-                    name={enemy.toUpperCase()}
-                    img={imageLoader(`./${enemy}.jpeg`).default}
-                    lives={playerLives[enemy]}
-                    shake={battleEnd}
-                  />
-                )}
-                {player && (
-                  <Player
-                    name={player.toUpperCase()}
-                    img={imageLoader(`./${player}.jpeg`).default}
-                    lives={playerLives[player]}
-                  />
-                )}
-                <div className="text-container">
-                  <div className="text-box">
-                    <div className="text-box-content">
-                      {enemy && <TextBox message={message} />}
-                    </div>
+      <Row className="panel">
+        <Panel imageLoader={imageLoader} playerLives={playerLives} />
+      </Row>
+      <Row className="justify-content-center battle-container">
+        <Col sm={12}>
+          {winner === '' ? (
+            <div className="px-2 mx-auto battle-box">
+              {enemy && (
+                <Enemy
+                  name={enemy.toUpperCase()}
+                  img={imageLoader(`./${enemy}.jpeg`).default}
+                  lives={playerLives[enemy]}
+                  shake={battleEnd}
+                />
+              )}
+              {player && (
+                <Player
+                  name={player.toUpperCase()}
+                  img={imageLoader(`./${player}.jpeg`).default}
+                  lives={playerLives[player]}
+                />
+              )}
+              <div className="text-container">
+                <div className="text-box">
+                  <div className="text-box-content">
+                    {enemy && <TextBox message={message} />}
                   </div>
                 </div>
               </div>
-            </Col>
-          </Row>
-          <Row>
-            <div className="text-center">
-              <Button
-                className="war-button"
-                variant="primary"
-                size="lg"
-                onClick={() => setWarStarted(true)}
-              >
-                War!
-              </Button>
             </div>
-          </Row>
-        </>
-      ) : (
-        <Row className="battle-container">
-          <Col sm={12}>
-            <div className="px-2 mx-auto battle-box">
-              <div className="mr-sm-4 avatar-box text-center">
-                <div className="animated fadeInUp">
-                  <img
-                    className="avatar mr-3 mt-4"
-                    src={imageLoader(`./${winner}.jpeg`).default}
-                    alt="Player avatar"
-                  />
-                </div>
+          ) : (
+            <div className="text-center winner-container">
+              <div className="animate__animated animate__backInDown">
+                <img
+                  className="crown"
+                  src={imageLoader(`./crown.png`).default}
+                  alt="Winner avatar"
+                />
+              </div>
+              <div className="animate__animated animate__jackInTheBox">
+                <img
+                  className="winner-img"
+                  src={imageLoader(`./${winner}.jpeg`).default}
+                  alt="Winner avatar"
+                />
               </div>
             </div>
-          </Col>
-        </Row>
-      )}
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <div className="text-center">
+          <Button
+            className="war-button"
+            variant="primary"
+            size="lg"
+            onClick={() => setWarStarted(true)}
+          >
+            War!
+          </Button>
+        </div>
+      </Row>
     </Container>
   );
 }

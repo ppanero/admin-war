@@ -28,11 +28,6 @@ h5 {
   font-size: 20px;
 }
 
-.avatar {
-  width: 100px;
-  height: 100px;
-}
-
 .hide {
   opacity: 0;
 }
@@ -77,12 +72,6 @@ h5 {
   padding: 5px;
   border-radius: 14px 7px 14px 7px;
   letter-spacing: -2px;
-}
-
-.avatar-box {
-  margin: 7px;
-  position: relative;
-  z-index: 0;
 }
 
 .oval {
@@ -210,6 +199,27 @@ h5 {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+/* Avatar */
+
+.avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.avatar-box {
+  margin: 7px;
+  position: relative;
+  z-index: 0;
+}
+
+.winner-img {
+  width: 250px;
+}
+
+.crown {
+  width: 100px;
 }
 
 /* Button */
