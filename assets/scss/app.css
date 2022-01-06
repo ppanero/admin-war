@@ -160,6 +160,11 @@ h5 {
   margin-bottom: 5px;
 }
 
+.dead-player {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
 /* Battle box */
 
 .battle-container {

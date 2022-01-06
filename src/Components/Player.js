@@ -5,7 +5,6 @@ export default function Player({ name, img, lives, hide, faint }) {
   // calc player progress bar percentage based on HP
   const livesColor =
     lives > 1 ? 'progress-bar bg-success' : 'progress-bar bg-danger';
-  const livesBar = lives > 1 ? '100%' : '50%';
   let anim;
   if (hide) {
     anim = 'hide';
@@ -37,7 +36,7 @@ export default function Player({ name, img, lives, hide, faint }) {
               <div
                 className={livesColor}
                 role="progressbar"
-                style={{ width: livesBar }}
+                style={{ width: `${lives * 50}%` }}
                 aria-valuenow="75"
                 aria-valuemin="0"
                 aria-valuemax="100"
