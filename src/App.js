@@ -10,8 +10,14 @@ const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
   const { players } = data;
-  const playerNames = Object.keys(players);
+  // state variables
   const [warStarted, setWarStarted] = useState(false);
+  const [playerNames, setPlayerNames] = useState(Object.keys(players));
+  const tmpPlayerLives = {};
+  playerNames.forEach((name) => {
+    tmpPlayerLives[name] = 2;
+  });
+  const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
   const [player, setPlayer] = useState('');
   const [enemy, setEnemy] = useState('');
 
@@ -24,18 +30,27 @@ export default function App() {
       } while (enemyIdx === playerIdx);
 
       setPlayer(playerNames[playerIdx]);
-      setEnemy(playerNames[enemyIdx]);
+      const enemyName = playerNames[enemyIdx];
+      setEnemy(enemyName);
+      if (playerLives[enemyName] === 1) {
+        setPlayerNames(playerNames.filter((name) => name !== enemyName));
+      }
+      setPlayerLives({
+        ...playerLives,
+        [enemyName]: playerLives[enemyName] - 1,
+      });
+      setWarStarted(false);
     }
   };
 
   useEffect(() => {
     battle();
-  }, [warStarted]);
+  }, [warStarted, playerLives]);
 
   return (
     <Container className="h-100">
       <Row className="panel">
-        <Panel imageLoader={imageLoader} players={Object.keys(players)} />
+        <Panel imageLoader={imageLoader} playerLives={playerLives} />
       </Row>
       <Row className="justify-content-center battle-container">
         <Col sm={12}>
@@ -44,7 +59,7 @@ export default function App() {
               <Enemy
                 name={enemy.toUpperCase()}
                 img={imageLoader(`./${enemy}.jpeg`).default}
-                lives={2}
+                lives={playerLives[enemy]}
                 hide={false}
                 faint={false}
               />
@@ -53,7 +68,7 @@ export default function App() {
               <Player
                 name={player.toUpperCase()}
                 img={imageLoader(`./${player}.jpeg`).default}
-                lives={1}
+                lives={playerLives[player]}
                 hide={false}
                 faint={false}
               />
