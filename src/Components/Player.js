@@ -8,7 +8,7 @@ export default function Player({ name, img, lives }) {
   return (
     <div>
       {/* HERO POKEMON CONTAINER */}
-      <div id="hero-container">
+      <div className="player-container hero-container">
         {/* HERO POKEMON AVATAR PICTURE */}
         <div className="avatar-box ml-sm-5">
           <div className="animate__animated animate__fadeInUp">
@@ -19,9 +19,9 @@ export default function Player({ name, img, lives }) {
         {/* END HERO POKEMON AVATAR PICTURE */}
 
         {/* HERO POKEMON INFO BOX */}
-        <div id="hero-info-box">
+        <div className="player-info-box">
           <div className="d-flex justify-content-between align-items-center">
-            <h2 id="hero-name">{name}</h2>
+            <h2 className="player-name">{name}</h2>
           </div>
           <div className="d-flex justify-content-between align-items-center ml-3 mr-1">
             <h5>HP</h5>

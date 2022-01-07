@@ -14,11 +14,11 @@ export default function Enemy({ name, img, lives, shake }) {
   return (
     <div>
       {/* ENEMY POKEMON CONTAINER */}
-      <div id="enemy-container">
+      <div className="player-container enemy-container">
         {/* ENEMY POKEMON INFO BOX */}
-        <div id="enemy-info-box">
+        <div className="player-info-box">
           <div className="d-flex justify-content-between align-items-center">
-            <h2 id="enemy-name">{name}</h2>
+            <h2 className="player-name">{name}</h2>
           </div>
           <div className="d-flex justify-content-between align-items-center ml-3 mr-1">
             <h5>HP</h5>
