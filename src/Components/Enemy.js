@@ -35,7 +35,7 @@ export default function Enemy({ name, img, lives, shake }) {
         </div>
         <div className="mr-sm-4 avatar-box">
           <div className={`animate__animated ${anim}`}>
-            <img className="avatar mr-3 mt-4" src={img} alt="Player avatar" />
+            <img className="avatar mr-3 mt-4" src={img} alt="Enemy avatar" />
           </div>
           <div className="oval" />
         </div>

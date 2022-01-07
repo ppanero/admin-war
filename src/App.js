@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import Enemy from './Components/Enemy';
+import Hero from './Components/Hero';
 import Panel from './Components/Panel';
-import Player from './Components/Player';
 import TextBox from './Components/TextBox';
 import data from '../assets/data/data.json';
 // eslint-disable-next-line no-var
@@ -19,7 +19,7 @@ export default function App() {
     tmpPlayerLives[name] = 2;
   });
   const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
-  const [player, setPlayer] = useState('');
+  const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
 
@@ -30,21 +30,21 @@ export default function App() {
       setTimeout(() => {
         setMessage(`Un ${enemyName} salvaje aparecio!`);
         setEnemy(enemyName);
-        let playerIdx;
+        let heroIdx;
         do {
-          playerIdx = Math.floor(Math.random() * playerNames.length);
-        } while (playerIdx === enemyIdx);
-        const playerName = playerNames[playerIdx];
+          heroIdx = Math.floor(Math.random() * playerNames.length);
+        } while (heroIdx === enemyIdx);
+        const heroName = playerNames[heroIdx];
 
         setTimeout(() => {
-          setMessage(`... ${playerName} te elijo a ti!`);
-          setPlayer(playerName);
+          setMessage(`... ${heroName} te elijo a ti!`);
+          setHero(heroName);
           if (playerLives[enemyName] === 1) {
             setPlayerNames(playerNames.filter((name) => name !== enemyName));
           }
 
           setTimeout(() => {
-            const phrases = players[playerName];
+            const phrases = players[heroName];
             const phraseIdx = Math.floor(Math.random() * phrases.length);
             setMessage(phrases[phraseIdx]);
             setBattleEnd(true);
@@ -68,7 +68,7 @@ export default function App() {
     setTimeout(() => {
       setBattleEnd(false);
       setEnemy('');
-      setPlayer('');
+      setHero('');
       battle();
     }, 3000);
   }, [warStarted, playerLives]);
@@ -90,11 +90,11 @@ export default function App() {
                   shake={battleEnd}
                 />
               )}
-              {player && (
-                <Player
-                  name={player.toUpperCase()}
-                  img={imageLoader(`./${player}.jpeg`).default}
-                  lives={playerLives[player]}
+              {hero && (
+                <Hero
+                  name={hero.toUpperCase()}
+                  img={imageLoader(`./${hero}.jpeg`).default}
+                  lives={playerLives[hero]}
                 />
               )}
               <div className="text-container">

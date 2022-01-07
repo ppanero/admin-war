@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Player({ name, img, lives }) {
+export default function Hero({ name, img, lives }) {
   // calc player progress bar percentage based on HP
   const livesColor = lives > 1 ? 'bg-success' : 'bg-danger';
 
@@ -10,7 +10,7 @@ export default function Player({ name, img, lives }) {
       <div className="player-container hero-container">
         <div className="avatar-box ml-sm-5">
           <div className="animate__animated animate__fadeInUp">
-            <img className="avatar mx-2" src={img} alt="Player avatar" />
+            <img className="avatar mx-2" src={img} alt="Hero avatar" />
           </div>
           <div className="oval" />
         </div>
@@ -38,7 +38,7 @@ export default function Player({ name, img, lives }) {
   );
 }
 
-Player.propTypes = {
+Hero.propTypes = {
   img: PropTypes.string.isRequired,
   lives: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
