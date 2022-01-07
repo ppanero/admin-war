@@ -139,18 +139,20 @@ export default function App() {
           )}
         </Col>
       </Row>
-      <Row>
-        <div className="text-center">
-          <Button
-            className="war-button"
-            variant="primary"
-            size="lg"
-            onClick={() => setWarStarted(true)}
-          >
-            War!
-          </Button>
-        </div>
-      </Row>
+      {!warStarted && (
+        <Row>
+          <div className="text-center">
+            <Button
+              className="war-button"
+              variant="primary"
+              size="lg"
+              onClick={() => setWarStarted(true)}
+            >
+              War!
+            </Button>
+          </div>
+        </Row>
+      )}
     </Container>
   );
 }
