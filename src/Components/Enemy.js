@@ -13,9 +13,7 @@ export default function Enemy({ name, img, lives, shake }) {
 
   return (
     <div>
-      {/* ENEMY POKEMON CONTAINER */}
       <div className="player-container enemy-container">
-        {/* ENEMY POKEMON INFO BOX */}
         <div className="player-info-box">
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="player-name">{name}</h2>
@@ -35,18 +33,13 @@ export default function Enemy({ name, img, lives, shake }) {
             </div>
           </div>
         </div>
-        {/* END ENEMY POKEMON INFO BOX */}
-
-        {/* ENEMY POKEMON AVATAR PICTURE */}
         <div className="mr-sm-4 avatar-box">
           <div className={`animate__animated ${anim}`}>
             <img className="avatar mr-3 mt-4" src={img} alt="Player avatar" />
           </div>
           <div className="oval" />
         </div>
-        {/* END ENEMY POKEMON AVATAR PICTURE */}
       </div>
-      {/* END ENEMY POKEMON CONTAINER */}
     </div>
   );
 }

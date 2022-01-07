@@ -7,18 +7,13 @@ export default function Player({ name, img, lives }) {
 
   return (
     <div>
-      {/* HERO POKEMON CONTAINER */}
       <div className="player-container hero-container">
-        {/* HERO POKEMON AVATAR PICTURE */}
         <div className="avatar-box ml-sm-5">
           <div className="animate__animated animate__fadeInUp">
             <img className="avatar mx-2" src={img} alt="Player avatar" />
           </div>
           <div className="oval" />
         </div>
-        {/* END HERO POKEMON AVATAR PICTURE */}
-
-        {/* HERO POKEMON INFO BOX */}
         <div className="player-info-box">
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="player-name">{name}</h2>
@@ -38,9 +33,7 @@ export default function Player({ name, img, lives }) {
             </div>
           </div>
         </div>
-        {/* END HERO POKEMON INFO BOX */}
       </div>
-      {/* END HERO POKEMON CONTAINER */}
     </div>
   );
 }
