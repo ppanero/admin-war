@@ -16,7 +16,7 @@ export default function Enemy({ name, img, lives, shake }) {
       <div className="player-container enemy-container">
         <div className="player-info-box">
           <div className="d-flex justify-content-between align-items-center">
-            <h2 className="player-name">{name}</h2>
+            <h2>{name}</h2>
           </div>
           <div className="d-flex justify-content-between align-items-center ml-3 mr-1">
             <h5>HP</h5>

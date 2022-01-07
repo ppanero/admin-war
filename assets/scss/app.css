@@ -12,6 +12,7 @@ html,
 h2 {
   text-transform: uppercase;
   font-size: 32px;
+  letter-spacing: -4px;
 }
 
 h2,
@@ -40,7 +41,8 @@ h5 {
 /* Panel */
 
 .panel {
-  margin: 50px 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   outline: 5px double black;
 }
 
@@ -53,6 +55,13 @@ h5 {
   -webkit-filter: blur(8px);
 }
 
+/* Kills List */
+
+.kills-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 /* Battle box */
 
 .battle-container {
@@ -65,15 +74,10 @@ h5 {
   max-width: 500px;
   min-width: 280px;
   height: 400px;
-  outline: 5px double black;
   background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-}
-
-.player-name {
-  letter-spacing: -4px;
 }
 
 .player-container {

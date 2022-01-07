@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import Enemy from './Components/Enemy';
 import Hero from './Components/Hero';
-import Panel from './Components/Panel';
+import PlayersPanel from './Components/PlayersPanel';
 import TextBox from './Components/TextBox';
 import data from '../assets/data/data.json';
+import KillerPanel from './Components/KillerPanel';
 // eslint-disable-next-line no-var
 const imageLoader = require.context('../assets/img/', false);
 
@@ -15,10 +16,13 @@ export default function App() {
   const [battleEnd, setBattleEnd] = useState(false);
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerLives = {};
+  const tmpKillsCount = {};
   playerNames.forEach((name) => {
     tmpPlayerLives[name] = 2;
+    tmpKillsCount[name] = 0;
   });
   const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
+  const [killsCount, setKillsCount] = useState(tmpKillsCount);
   const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
@@ -48,6 +52,13 @@ export default function App() {
             const phraseIdx = Math.floor(Math.random() * phrases.length);
             setMessage(phrases[phraseIdx]);
             setBattleEnd(true);
+            if (playerLives[enemyName] === 1) {
+              // will be a kill after the update
+              setKillsCount({
+                ...killsCount,
+                [heroName]: killsCount[heroName] + 1,
+              });
+            }
             setPlayerLives({
               ...playerLives,
               [enemyName]: playerLives[enemyName] - 1,
@@ -76,12 +87,15 @@ export default function App() {
   return (
     <Container className="h-100">
       <Row className="panel">
-        <Panel imageLoader={imageLoader} playerLives={playerLives} />
+        <PlayersPanel imageLoader={imageLoader} playerLives={playerLives} />
       </Row>
-      <Row className="justify-content-center battle-container">
-        <Col sm={12}>
+      <Row className="battle-container">
+        <Col sm={2} className="panel">
+          <KillerPanel killsCount={killsCount} />
+        </Col>
+        <Col sm={8} className="justify-content-center">
           {winner === '' ? (
-            <div className="px-2 mx-auto battle-box">
+            <div className="px-2 mx-auto panel battle-box">
               {enemy && (
                 <Enemy
                   name={enemy.toUpperCase()}
