@@ -6,7 +6,7 @@ export default function KillerPanel({ killsCount }) {
   const container = [];
   Object.entries(killsCount).forEach(([player, kills]) => {
     container.push(
-      <li>
+      <li key={player}>
         {player}: {kills}
       </li>,
     );
@@ -21,6 +21,5 @@ export default function KillerPanel({ killsCount }) {
 }
 
 KillerPanel.propTypes = {
-  killsCount: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
-    .isRequired,
+  killsCount: PropTypes.objectOf(PropTypes.number).isRequired,
 };
