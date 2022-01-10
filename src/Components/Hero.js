@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ProgressBar } from 'react-bootstrap';
 
 export default function Hero({ name, img, lives }) {
   // calc player progress bar percentage based on HP
-  const livesColor = lives > 1 ? 'bg-success' : 'bg-danger';
+  const variant = lives < 2 ? 'danger' : 'success';
 
   return (
     <div>
@@ -18,19 +19,9 @@ export default function Hero({ name, img, lives }) {
           <div className="d-flex justify-content-between align-items-center">
             <h2>{name}</h2>
           </div>
-          <div className="d-flex justify-content-between align-items-center ml-3 mr-1">
+          <div className="d-flex justify-content-between align-items-center">
             <h5>HP</h5>
-            <div className="progress ml-1 both-progress">
-              <div
-                className={`progress-bar ${livesColor}`}
-                role="progressbar"
-                style={{ width: `${lives * 50}%` }}
-                aria-valuenow="75"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                aria-label="todo"
-              />
-            </div>
+            <ProgressBar now={lives * 50} variant={variant} />
           </div>
         </div>
       </div>

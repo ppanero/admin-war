@@ -29,12 +29,7 @@ h5 {
   font-size: 20px;
 }
 
-.both-progress {
-  position: relative;
-  width: 100%;
-}
-
-.progress-bar {
+.progress {
   border-radius: 18px;
 }
 
@@ -95,6 +90,13 @@ h5 {
   padding: 5px;
   border-radius: 14px 7px 14px 7px;
   letter-spacing: -2px;
+}
+
+.player-info-box .progress {
+  position: relative;
+  width: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Enemy */
