@@ -7,7 +7,8 @@ export default function PlayersPanel({ playerLives, imageLoader }) {
   const container = [];
   Object.entries(playerLives).forEach(([player, lives]) => {
     const variant = getProgressBarVariant(lives);
-    const imgStyle = lives > 0 ? 'avatar mx-2' : 'avatar mx-2 dead-player';
+    const imgStyle =
+      lives > 0 ? 'player-avatar mx-2' : 'player-avatar mx-2 dead-player';
     const img = imageLoader(`./${player}.jpeg`).default;
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>

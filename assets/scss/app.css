@@ -41,8 +41,11 @@ h5 {
   outline: 5px double black;
 }
 
-.panel .avatar {
+.player-avatar {
+  width: 100px;
+  height: 100px;
   margin-bottom: 5px;
+  border-radius: 20px;
 }
 
 .dead-player {
@@ -66,9 +69,9 @@ h5 {
 
 .battle-box {
   position: relative;
-  max-width: 500px;
-  min-width: 280px;
-  height: 400px;
+  max-width: 750px;
+  min-width: 300px;
+  height: 600px;
   background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -105,21 +108,29 @@ h5 {
   top: 15px;
 }
 
+.enemy-container .avatar {
+  margin-right: 80px;
+}
+
 /* Hero */
 
 .hero-container {
-  top: 90px;
+  top: 170px;
 }
 
 .hero-container .avatar-box {
   left: 7px;
 }
 
+.hero-container .avatar {
+  margin-left: 80px;
+}
+
 /* Oval */
 
 .oval {
-  width: 120px;
-  height: 60px;
+  width: 200px;
+  height: 100px;
   background: #ccbaa1;
   border-radius: 50%;
   position: absolute;
@@ -127,13 +138,13 @@ h5 {
 }
 
 .enemy-container .oval {
-  top: 80px;
-  left: -13px;
+  top: 100px;
+  left: -20px;
 }
 
 .hero-container .oval {
-  top: 72px;
-  left: -10px;
+  top: 80px;
+  left: 45px;
 }
 
 /* Battle text */
@@ -148,7 +159,7 @@ h5 {
 
 .text-box {
   background-color: #4b4f53;
-  height: 100px;
+  height: 140px;
   padding: 10px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -157,7 +168,7 @@ h5 {
 
 .text-box-content {
   background-color: #5381b6;
-  height: 80px;
+  height: 120px;
   border-radius: 5px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -174,8 +185,9 @@ h5 {
 /* Avatar */
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
 }
 
 .avatar-box {

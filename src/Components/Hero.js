@@ -11,7 +11,7 @@ export default function Hero({ name, img, lives }) {
       <div className="player-container hero-container">
         <div className="avatar-box ml-sm-5">
           <div className="animate__animated animate__fadeInUp">
-            <img className="avatar mx-2" src={img} alt="Hero avatar" />
+            <img className="avatar" src={img} alt="Hero avatar" />
           </div>
           <div className="oval" />
         </div>
