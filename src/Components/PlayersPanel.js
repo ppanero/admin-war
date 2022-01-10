@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
+import { getProgressBarVariant } from '../utils';
 
 export default function PlayersPanel({ playerLives, imageLoader }) {
   const container = [];
   Object.entries(playerLives).forEach(([player, lives]) => {
-    const variant = lives < 2 ? 'danger' : 'success';
+    const variant = getProgressBarVariant(lives);
     const imgStyle = lives > 0 ? 'avatar mx-2' : 'avatar mx-2 dead-player';
     const img = imageLoader(`./${player}.jpeg`).default;
     container.push(

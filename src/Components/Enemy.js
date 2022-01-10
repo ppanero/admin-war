@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressBar } from 'react-bootstrap';
+import { getProgressBarVariant } from '../utils';
 
 export default function Enemy({ name, img, lives, shake }) {
-  // calc enemy progress bar percentage based on HP
-  const variant = lives < 2 ? 'danger' : 'success';
+  const variant = getProgressBarVariant(lives);
 
   let anim = 'animate__fadeOut slow';
   if (shake) {

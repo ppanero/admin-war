@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
+import { capitalize } from '../utils';
 
 export default function KillerPanel({ killsCount }) {
   const container = [];
   Object.entries(killsCount).forEach(([player, kills]) => {
     container.push(
       <li key={player}>
-        {player}: {kills}
+        {capitalize(player)}: {kills}
       </li>,
     );
   });

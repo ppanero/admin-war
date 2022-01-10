@@ -6,6 +6,7 @@ import PlayersPanel from './Components/PlayersPanel';
 import TextBox from './Components/TextBox';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
+import { capitalize } from './utils';
 // eslint-disable-next-line no-var
 const imageLoader = require.context('../assets/img/', false);
 
@@ -32,7 +33,7 @@ export default function App() {
       const enemyIdx = Math.floor(Math.random() * playerNames.length);
       const enemyName = playerNames[enemyIdx];
       setTimeout(() => {
-        setMessage(`Un ${enemyName} salvaje aparecio!`);
+        setMessage(`Un ${capitalize(enemyName)} salvaje aparecio!`);
         setEnemy(enemyName);
         let heroIdx;
         do {
@@ -41,7 +42,7 @@ export default function App() {
         const heroName = playerNames[heroIdx];
 
         setTimeout(() => {
-          setMessage(`... ${heroName} te elijo a ti!`);
+          setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
           setHero(heroName);
           if (playerLives[enemyName] === 1) {
             setPlayerNames(playerNames.filter((name) => name !== enemyName));

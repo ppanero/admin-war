@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressBar } from 'react-bootstrap';
+import { getProgressBarVariant } from '../utils';
 
 export default function Hero({ name, img, lives }) {
-  // calc player progress bar percentage based on HP
-  const variant = lives < 2 ? 'danger' : 'success';
+  const variant = getProgressBarVariant(lives);
 
   return (
     <div>
