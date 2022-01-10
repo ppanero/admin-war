@@ -71,7 +71,9 @@ export default function App() {
 
   useEffect(() => {
     if (playerNames.length === 1) {
-      setWinner(playerNames[0]);
+      setTimeout(() => {
+        setWinner(playerNames[0]);
+      }, 5000);
     }
   }, [playerNames]);
 
