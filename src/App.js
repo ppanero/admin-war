@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import Enemy from './Components/Enemy';
-import Hero from './Components/Hero';
 import PlayersPanel from './Components/PlayersPanel';
-import TextBox from './Components/TextBox';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
 import { capitalize } from './utils';
+import Winner from './Components/Winner';
+import BattleBox from './Components/BattleBox';
 // eslint-disable-next-line no-var
 const imageLoader = require.context('../assets/img/', false);
 
@@ -98,47 +97,19 @@ export default function App() {
         </Col>
         <Col sm={8} className="justify-content-center">
           {winner === '' ? (
-            <div className="px-2 mx-auto panel battle-box">
-              {enemy && (
-                <Enemy
-                  name={enemy.toUpperCase()}
-                  img={imageLoader(`./${enemy}.jpeg`).default}
-                  lives={playerLives[enemy]}
-                  shake={battleEnd}
-                />
-              )}
-              {hero && (
-                <Hero
-                  name={hero.toUpperCase()}
-                  img={imageLoader(`./${hero}.jpeg`).default}
-                  lives={playerLives[hero]}
-                />
-              )}
-              <div className="text-container">
-                <div className="text-box">
-                  <div className="text-box-content">
-                    {enemy && <TextBox message={message} />}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BattleBox
+              enemy={enemy}
+              enemyHit={battleEnd}
+              hero={hero}
+              playerLives={playerLives}
+              message={message}
+              imageLoader={imageLoader}
+            />
           ) : (
-            <div className="text-center winner-container">
-              <div className="animate__animated animate__backInDown">
-                <img
-                  className="crown"
-                  src={imageLoader(`./crown.png`).default}
-                  alt="Winner avatar"
-                />
-              </div>
-              <div className="animate__animated animate__jackInTheBox">
-                <img
-                  className="winner-img"
-                  src={imageLoader(`./${winner}.jpeg`).default}
-                  alt="Winner avatar"
-                />
-              </div>
-            </div>
+            <Winner
+              img={imageLoader(`./${winner}.jpeg`).default}
+              imgCrown={imageLoader(`./crown.png`).default}
+            />
           )}
         </Col>
       </Row>
