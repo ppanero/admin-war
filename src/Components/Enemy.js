@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressBar } from 'react-bootstrap';
 import { getProgressBarVariant, imageLoader } from '../utils';
+import playerStatus from '../playerStatus';
 
-export default function Enemy({ name, lives, shake }) {
+export default function Enemy({ name, lives, status }) {
   const variant = getProgressBarVariant(lives);
 
-  let anim = 'animate__fadeOut slow';
-  if (shake) {
-    anim = 'animate__shakeX';
-  } else if (lives > 0) {
+  let anim = '';
+  if (status === playerStatus('APPEAR')) {
     anim = 'animate__zoomIn';
+  } else if (status === playerStatus('HIT')) {
+    anim = 'animate__shakeX';
+  } else if (status === playerStatus('DEAD')) {
+    anim = 'animate__fadeOut slow';
   }
 
   return (
@@ -43,9 +46,9 @@ export default function Enemy({ name, lives, shake }) {
 Enemy.propTypes = {
   name: PropTypes.string.isRequired,
   lives: PropTypes.number.isRequired,
-  shake: PropTypes.bool,
+  status: PropTypes.string,
 };
 
 Enemy.defaultProps = {
-  shake: false,
+  status: playerStatus('APPEAR'),
 };

@@ -4,6 +4,7 @@ import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
 import { capitalize, sleep } from './utils';
+import playerStatus from './playerStatus';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
 import WarModal from './Components/WarModal';
@@ -12,7 +13,7 @@ export default function App() {
   const [players] = useState(data.players);
   const [message, setMessage] = useState('');
   const [warStarted, setWarStarted] = useState(false);
-  const [battleEnd, setBattleEnd] = useState(false);
+  const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerLives = {};
   const tmpKillsCount = {};
@@ -39,17 +40,20 @@ export default function App() {
 
   const killPlayer = (killed, killer) => {
     if (playerLives[killed] === 1) {
-      setPlayerNames(playerNames.filter((name) => name !== killed));
-      setKillsCount({
-        ...killsCount,
-        [killer]: killsCount[killer] + 1,
+      sleep(2000).then(() => {
+        setPlayerNames(playerNames.filter((name) => name !== killed));
+        setKillsCount({
+          ...killsCount,
+          [killer]: killsCount[killer] + 1,
+        });
+        setEnemyStatus(playerStatus('DEAD'));
       });
     }
   };
 
   const battle = () => {
-    setBattleEnd(false);
     setEnemy('');
+    setEnemyStatus(playerStatus('APPEAR'));
     setHero('');
     sleep(2000).then(() => {
       const enemyName = calculatePlayer();
@@ -64,7 +68,7 @@ export default function App() {
         setHero(heroName);
         sleep(2000).then(() => {
           setMessage(getAttack(heroName));
-          setBattleEnd(true);
+          setEnemyStatus(playerStatus('HIT'));
           killPlayer(enemyName, heroName);
           setPlayerLives({
             ...playerLives,
@@ -102,7 +106,7 @@ export default function App() {
         <Col sm={8} className="justify-content-center">
           <BattleBox
             enemy={enemy}
-            enemyHit={battleEnd}
+            enemyStatus={enemyStatus}
             hero={hero}
             playerLives={playerLives}
             message={message}
