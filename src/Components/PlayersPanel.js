@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
-import { getProgressBarVariant } from '../utils';
+import { getProgressBarVariant, imageLoader } from '../utils';
 
-export default function PlayersPanel({ playerLives, imageLoader }) {
+export default function PlayersPanel({ playerLives }) {
   const container = [];
   Object.entries(playerLives).forEach(([player, lives]) => {
     const variant = getProgressBarVariant(lives);
@@ -25,5 +25,4 @@ export default function PlayersPanel({ playerLives, imageLoader }) {
 
 PlayersPanel.propTypes = {
   playerLives: PropTypes.objectOf(PropTypes.number).isRequired,
-  imageLoader: PropTypes.func.isRequired,
 };
