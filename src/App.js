@@ -39,15 +39,14 @@ export default function App() {
   };
 
   const killPlayer = (killed, killer) => {
+    // due to the synchronous logic it would never be in the list if lives were 0
     if (playerLives[killed] === 1) {
-      sleep(2000).then(() => {
-        setPlayerNames(playerNames.filter((name) => name !== killed));
-        setKillsCount({
-          ...killsCount,
-          [killer]: killsCount[killer] + 1,
-        });
-        setEnemyStatus(playerStatus('DEAD'));
+      setPlayerNames(playerNames.filter((name) => name !== killed));
+      setKillsCount({
+        ...killsCount,
+        [killer]: killsCount[killer] + 1,
       });
+      setEnemyStatus(playerStatus('DEAD'));
     }
   };
 
@@ -69,10 +68,12 @@ export default function App() {
         sleep(2000).then(() => {
           setMessage(getAttack(heroName));
           setEnemyStatus(playerStatus('HIT'));
-          killPlayer(enemyName, heroName);
-          setPlayerLives({
-            ...playerLives,
-            [enemyName]: playerLives[enemyName] - 1,
+          sleep(2000).then(() => {
+            killPlayer(enemyName, heroName);
+            setPlayerLives({
+              ...playerLives,
+              [enemyName]: playerLives[enemyName] - 1,
+            });
           });
         });
       });
