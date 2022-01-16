@@ -210,6 +210,9 @@ h5 {
 .war-button {
   background-color: #5381b6;
   border-color: #5381b6;
+  font-size: 2rem;
+  padding: 7px 40px;
+  margin: 15px;
 }
 
 .war-button:hover {
