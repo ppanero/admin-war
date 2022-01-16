@@ -6,7 +6,7 @@ import TextBox from './TextBox';
 
 export default function BattleBox({
   enemy,
-  enemyHit,
+  enemyStatus,
   hero,
   playerLives,
   message,
@@ -14,7 +14,7 @@ export default function BattleBox({
   return (
     <div className="px-2 mx-auto panel battle-box">
       {enemy && (
-        <Enemy name={enemy} lives={playerLives[enemy]} shake={enemyHit} />
+        <Enemy name={enemy} lives={playerLives[enemy]} status={enemyStatus} />
       )}
       {hero && <Hero name={hero} lives={playerLives[hero]} />}
       <div className="text-container">
@@ -30,7 +30,7 @@ export default function BattleBox({
 
 BattleBox.propTypes = {
   enemy: PropTypes.string.isRequired,
-  enemyHit: PropTypes.bool.isRequired,
+  enemyStatus: PropTypes.string.isRequired,
   hero: PropTypes.string.isRequired,
   playerLives: PropTypes.objectOf(PropTypes.number).isRequired,
   message: PropTypes.string.isRequired,
