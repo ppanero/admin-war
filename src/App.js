@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
 import { capitalize, sleep } from './utils';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
+import WarModal from './Components/WarModal';
 // eslint-disable-next-line no-var
 const imageLoader = require.context('../assets/img/', false);
 
@@ -92,6 +93,7 @@ export default function App() {
 
   return (
     <Container className="h-100">
+      <WarModal show={!warStarted} onClick={() => setWarStarted(true)} />
       <Row className="panel">
         <PlayersPanel imageLoader={imageLoader} playerLives={playerLives} />
       </Row>
@@ -117,20 +119,6 @@ export default function App() {
           )}
         </Col>
       </Row>
-      {!warStarted && (
-        <Row>
-          <div className="text-center">
-            <Button
-              className="war-button"
-              variant="primary"
-              size="lg"
-              onClick={() => setWarStarted(true)}
-            >
-              War!
-            </Button>
-          </div>
-        </Row>
-      )}
     </Container>
   );
 }
