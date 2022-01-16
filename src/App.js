@@ -7,8 +7,6 @@ import { capitalize, sleep } from './utils';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
 import WarModal from './Components/WarModal';
-// eslint-disable-next-line no-var
-const imageLoader = require.context('../assets/img/', false);
 
 export default function App() {
   const [players] = useState(data.players);
@@ -95,7 +93,7 @@ export default function App() {
     <Container className="h-100">
       <WarModal show={!warStarted} onClick={() => setWarStarted(true)} />
       <Row className="panel">
-        <PlayersPanel imageLoader={imageLoader} playerLives={playerLives} />
+        <PlayersPanel playerLives={playerLives} />
       </Row>
       <Row className="battle-container">
         <Col sm={2} className="panel">
@@ -108,7 +106,6 @@ export default function App() {
             hero={hero}
             playerLives={playerLives}
             message={message}
-            imageLoader={imageLoader}
           />
           <Winner show={winner !== ''} winner={winner} />
         </Col>
