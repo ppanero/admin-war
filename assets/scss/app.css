@@ -197,11 +197,12 @@ h5 {
 }
 
 .winner-img {
-  width: 250px;
+  width: 350px;
+  border-radius: 20px;
 }
 
 .crown {
-  width: 100px;
+  width: 150px;
 }
 
 /* Button */

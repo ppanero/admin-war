@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
-import { capitalize } from './utils';
+import { capitalize, sleep } from './utils';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
 // eslint-disable-next-line no-var
@@ -27,63 +27,67 @@ export default function App() {
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
 
-  const battle = () => {
-    if (warStarted) {
-      const enemyIdx = Math.floor(Math.random() * playerNames.length);
-      const enemyName = playerNames[enemyIdx];
-      setTimeout(() => {
-        setMessage(`Un ${capitalize(enemyName)} salvaje aparecio!`);
-        setEnemy(enemyName);
-        let heroIdx;
-        do {
-          heroIdx = Math.floor(Math.random() * playerNames.length);
-        } while (heroIdx === enemyIdx);
-        const heroName = playerNames[heroIdx];
+  const calculatePlayer = () => {
+    const playerIdx = Math.floor(Math.random() * playerNames.length);
+    return playerNames[playerIdx];
+  };
 
-        setTimeout(() => {
-          setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
-          setHero(heroName);
-          if (playerLives[enemyName] === 1) {
-            setPlayerNames(playerNames.filter((name) => name !== enemyName));
-          }
+  const getAttack = (playerName) => {
+    const phrases = players[playerName];
+    const phraseIdx = Math.floor(Math.random() * phrases.length);
+    return phrases[phraseIdx];
+  };
 
-          setTimeout(() => {
-            const phrases = players[heroName];
-            const phraseIdx = Math.floor(Math.random() * phrases.length);
-            setMessage(phrases[phraseIdx]);
-            setBattleEnd(true);
-            if (playerLives[enemyName] === 1) {
-              // will be a kill after the update
-              setKillsCount({
-                ...killsCount,
-                [heroName]: killsCount[heroName] + 1,
-              });
-            }
-            setPlayerLives({
-              ...playerLives,
-              [enemyName]: playerLives[enemyName] - 1,
-            });
-          }, 2000);
-        }, 2000);
-      }, 2000);
+  const killPlayer = (killed, killer) => {
+    if (playerLives[killed] === 1) {
+      setPlayerNames(playerNames.filter((name) => name !== killed));
+      setKillsCount({
+        ...killsCount,
+        [killer]: killsCount[killer] + 1,
+      });
     }
   };
 
+  const battle = () => {
+    setBattleEnd(false);
+    setEnemy('');
+    setHero('');
+    sleep(2000).then(() => {
+      const enemyName = calculatePlayer();
+      setMessage(`Un ${capitalize(enemyName)} salvaje aparecio!`);
+      setEnemy(enemyName);
+      sleep(2000).then(() => {
+        let heroName;
+        do {
+          heroName = calculatePlayer();
+        } while (heroName === enemyName);
+        setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
+        setHero(heroName);
+        sleep(2000).then(() => {
+          setMessage(getAttack(heroName));
+          setBattleEnd(true);
+          killPlayer(enemyName, heroName);
+          setPlayerLives({
+            ...playerLives,
+            [enemyName]: playerLives[enemyName] - 1,
+          });
+        });
+      });
+    });
+  };
+
   useEffect(() => {
-    if (playerNames.length === 1) {
-      setTimeout(() => {
+    if (playerNames.length === 1 && warStarted) {
+      sleep(5000).then(() => {
         setWinner(playerNames[0]);
-      }, 5000);
+      });
     }
   }, [playerNames]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setBattleEnd(false);
-      setEnemy('');
-      setHero('');
-      battle();
-    }, 3000);
+    if (playerNames.length > 1 && warStarted) {
+      sleep(3000).then(() => battle());
+    }
   }, [warStarted, playerLives]);
 
   return (
