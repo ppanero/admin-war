@@ -14,3 +14,5 @@ export function sleep(milliseconds) {
   // eslint-disable-next-line no-new, no-promise-executor-return
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
+
+export const imageLoader = require.context('../assets/img/', false);

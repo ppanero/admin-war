@@ -102,21 +102,15 @@ export default function App() {
           <KillerPanel killsCount={killsCount} />
         </Col>
         <Col sm={8} className="justify-content-center">
-          {winner === '' ? (
-            <BattleBox
-              enemy={enemy}
-              enemyHit={battleEnd}
-              hero={hero}
-              playerLives={playerLives}
-              message={message}
-              imageLoader={imageLoader}
-            />
-          ) : (
-            <Winner
-              img={imageLoader(`./${winner}.jpeg`).default}
-              imgCrown={imageLoader(`./crown.png`).default}
-            />
-          )}
+          <BattleBox
+            enemy={enemy}
+            enemyHit={battleEnd}
+            hero={hero}
+            playerLives={playerLives}
+            message={message}
+            imageLoader={imageLoader}
+          />
+          <Winner show={winner !== ''} winner={winner} />
         </Col>
       </Row>
     </Container>
