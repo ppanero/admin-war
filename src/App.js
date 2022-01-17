@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
@@ -13,6 +13,7 @@ export default function App() {
   const [players] = useState(data.players);
   const [message, setMessage] = useState('');
   const [warStarted, setWarStarted] = useState(false);
+  const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerLives = {};
@@ -90,13 +91,22 @@ export default function App() {
 
   useEffect(() => {
     if (playerNames.length > 1 && warStarted) {
-      sleep(3000).then(() => battle());
+      sleep(battleInterval).then(() => battle());
     }
   }, [warStarted, playerLives]);
 
   return (
     <Container className="h-100">
-      <WarModal show={!warStarted} onClick={() => setWarStarted(true)} />
+      <WarModal
+        show={!warStarted}
+        onClick={useCallback(
+          (interval) => () => {
+            setWarStarted(true);
+            setBattleInterval(interval.current.value * 60 * 1000);
+          },
+          [],
+        )}
+      />
       <Row className="panel">
         <PlayersPanel playerLives={playerLives} />
       </Row>
