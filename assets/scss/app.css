@@ -53,6 +53,11 @@ h5 {
   -webkit-filter: blur(8px);
 }
 
+button.unstyled {
+  background: none;
+  border: none;
+}
+
 /* Kills List */
 
 .kills-list {

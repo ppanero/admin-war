@@ -16,14 +16,13 @@ export default function App() {
   const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
-  const tmpPlayerLives = {};
-  const tmpKillsCount = {};
+  const tmpChosenPlayers = {};
   playerNames.forEach((name) => {
-    tmpPlayerLives[name] = 2;
-    tmpKillsCount[name] = 0;
+    tmpChosenPlayers[name] = true;
   });
-  const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
-  const [killsCount, setKillsCount] = useState(tmpKillsCount);
+  const [chosenPlayers, setChosenPlayers] = useState(tmpChosenPlayers);
+  const [playerLives, setPlayerLives] = useState({});
+  const [killsCount, setKillsCount] = useState({});
   const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
@@ -93,19 +92,42 @@ export default function App() {
     if (playerNames.length > 1 && warStarted) {
       sleep(battleInterval).then(() => battle());
     }
-  }, [warStarted, playerLives]);
+  }, [playerLives]);
+
+  useEffect(() => {
+    if (warStarted) {
+      const tmpPlayerLives = {};
+      const tmpKillsCount = {};
+      playerNames.forEach((name) => {
+        tmpPlayerLives[name] = 2;
+        tmpKillsCount[name] = 0;
+      });
+      setKillsCount(tmpKillsCount);
+      setPlayerLives(tmpPlayerLives); // this will trigger the battle
+    }
+  }, [warStarted]);
 
   return (
     <Container className="h-100">
       <WarModal
         show={!warStarted}
-        onClick={useCallback(
+        onWarClick={useCallback(
           (interval) => () => {
             setWarStarted(true);
             setBattleInterval(interval.current.value * 60 * 1000);
           },
           [],
         )}
+        onPlayerClick={useCallback(
+          (player) => () => {
+            setChosenPlayers({
+              ...chosenPlayers,
+              [player]: !chosenPlayers[player],
+            });
+          },
+          [],
+        )}
+        players={chosenPlayers}
       />
       <Row className="panel">
         <PlayersPanel playerLives={playerLives} />

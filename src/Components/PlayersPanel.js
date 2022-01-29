@@ -7,12 +7,15 @@ export default function PlayersPanel({ playerLives }) {
   const container = [];
   Object.entries(playerLives).forEach(([player, lives]) => {
     const variant = getProgressBarVariant(lives);
-    const imgStyle =
-      lives > 0 ? 'player-avatar mx-2' : 'player-avatar mx-2 dead-player';
+    const blur = lives > 0 ? '' : 'dead-player';
     const img = imageLoader(`./${player}.jpeg`).default;
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
-        <img className={imgStyle} src={img} alt="Player avatar" />
+        <img
+          className={`player-avatar mx-2 ${blur}`}
+          src={img}
+          alt="Player avatar"
+        />
         <div className="px-2">
           <ProgressBar now={lives * 50} variant={variant} />
         </div>
@@ -25,4 +28,30 @@ export default function PlayersPanel({ playerLives }) {
 
 PlayersPanel.propTypes = {
   playerLives: PropTypes.objectOf(PropTypes.number).isRequired,
+};
+
+export function ChoosingPlayersPanel({ chosenPlayers, onClick }) {
+  const container = [];
+  Object.entries(chosenPlayers).forEach(([player, chosen]) => {
+    const blur = chosen ? '' : 'dead-player';
+    const img = imageLoader(`./${player}.jpeg`).default;
+    container.push(
+      <Col lg="auto" className="avatar-box" key={player}>
+        <button type="button" className="unstyled" onClick={onClick(player)}>
+          <img
+            className={`player-avatar mx-2 ${blur}`}
+            src={img}
+            alt="Player avatar"
+          />
+        </button>
+      </Col>,
+    );
+  });
+
+  return <Row className="justify-content-md-center">{container}</Row>;
+}
+
+ChoosingPlayersPanel.propTypes = {
+  chosenPlayers: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onClick: PropTypes.func.isRequired,
 };

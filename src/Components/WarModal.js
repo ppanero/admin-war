@@ -1,8 +1,9 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { ChoosingPlayersPanel } from './PlayersPanel';
 
-export default function WarModal({ show, onClick }) {
+export default function WarModal({ show, onWarClick, onPlayerClick, players }) {
   const interval = createRef();
 
   return (
@@ -14,6 +15,11 @@ export default function WarModal({ show, onClick }) {
     >
       <Modal.Body>
         <div className="text-center">
+          <ChoosingPlayersPanel
+            chosenPlayers={players}
+            onClick={onPlayerClick}
+          />
+          <hr />
           <Form>
             <Form.Group className="mb-3" controlId="formInterval">
               <Form.Label>Invervalo entre batallas (en minutos)</Form.Label>
@@ -23,7 +29,7 @@ export default function WarModal({ show, onClick }) {
               className="war-button"
               variant="primary"
               size="lg"
-              onClick={onClick(interval)}
+              onClick={onWarClick(interval)}
             >
               War!
             </Button>
@@ -36,5 +42,7 @@ export default function WarModal({ show, onClick }) {
 
 WarModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onWarClick: PropTypes.func.isRequired,
+  onPlayerClick: PropTypes.func.isRequired,
+  players: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
