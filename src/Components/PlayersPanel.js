@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
 import { getProgressBarVariant, imageLoader } from '../utils';
 
-export default function PlayersPanel({ playerLives }) {
+export default function PlayersPanel({ playersHp }) {
   const container = [];
-  Object.entries(playerLives).forEach(([player, lives]) => {
-    const variant = getProgressBarVariant(lives);
+  Object.entries(playersHp).forEach(([player, hp]) => {
+    const variant = getProgressBarVariant(hp);
     const imgStyle =
-      lives > 0 ? 'player-avatar mx-2' : 'player-avatar mx-2 dead-player';
+      hp > 0 ? 'player-avatar mx-2' : 'player-avatar mx-2 dead-player';
     const img = imageLoader(`./${player}.jpeg`).default;
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
         <img className={imgStyle} src={img} alt="Player avatar" />
         <div className="px-2">
-          <ProgressBar now={lives * 50} variant={variant} />
+          <ProgressBar now={hp} variant={variant} />
         </div>
       </Col>,
     );
@@ -24,5 +24,5 @@ export default function PlayersPanel({ playerLives }) {
 }
 
 PlayersPanel.propTypes = {
-  playerLives: PropTypes.objectOf(PropTypes.number).isRequired,
+  playersHp: PropTypes.objectOf(PropTypes.number).isRequired,
 };

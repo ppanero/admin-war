@@ -4,8 +4,14 @@ export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getProgressBarVariant(lives) {
-  return lives < 2 ? 'danger' : 'success';
+export function getProgressBarVariant(hp) {
+  if (hp > 74) {
+    return 'success';
+  }
+  if (hp > 24) {
+    return 'warning';
+  }
+  return 'danger';
 }
 
 export function getAnimationForStatus(status) {
