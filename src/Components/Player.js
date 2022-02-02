@@ -16,7 +16,7 @@ export function LifeBox({ name, lives, variant }) {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <h5>HP</h5>
-        <ProgressBar now={lives * 50} variant={variant} />
+        <ProgressBar now={lives} variant={variant} />
       </div>
     </div>
   );

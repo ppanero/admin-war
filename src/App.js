@@ -16,13 +16,13 @@ export default function App() {
   const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
-  const tmpPlayerLives = {};
+  const tmpPlayerHp = {};
   const tmpKillsCount = {};
   playerNames.forEach((name) => {
-    tmpPlayerLives[name] = 2;
+    tmpPlayerHp[name] = 100;
     tmpKillsCount[name] = 0;
   });
-  const [playerLives, setPlayerLives] = useState(tmpPlayerLives);
+  const [playersHp, setPlayerHp] = useState(tmpPlayerHp);
   const [killsCount, setKillsCount] = useState(tmpKillsCount);
   const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
@@ -40,15 +40,12 @@ export default function App() {
   };
 
   const killPlayer = (killed, killer) => {
-    // due to the synchronous logic it would never be in the list if lives were 0
-    if (playerLives[killed] === 1) {
-      setPlayerNames(playerNames.filter((name) => name !== killed));
-      setKillsCount({
-        ...killsCount,
-        [killer]: killsCount[killer] + 1,
-      });
-      setEnemyStatus(playerStatus('DEAD'));
-    }
+    setPlayerNames(playerNames.filter((name) => name !== killed));
+    setKillsCount({
+      ...killsCount,
+      [killer]: killsCount[killer] + 1,
+    });
+    setEnemyStatus(playerStatus('DEAD'));
   };
 
   const battle = () => {
@@ -70,11 +67,15 @@ export default function App() {
           setMessage(getAttack(heroName));
           setEnemyStatus(playerStatus('HIT'));
           sleep(2000).then(() => {
-            killPlayer(enemyName, heroName);
-            setPlayerLives({
-              ...playerLives,
-              [enemyName]: playerLives[enemyName] - 1,
+            const updateLife =
+              playersHp[enemyName] > 15 ? playersHp[enemyName] - 15 : 0;
+            setPlayerHp({
+              ...playersHp,
+              [enemyName]: updateLife,
             });
+            if (updateLife === 0) {
+              killPlayer(enemyName, heroName);
+            }
           });
         });
       });
@@ -93,7 +94,7 @@ export default function App() {
     if (playerNames.length > 1 && warStarted) {
       sleep(battleInterval).then(() => battle());
     }
-  }, [warStarted, playerLives]);
+  }, [warStarted, playersHp]);
 
   return (
     <Container className="h-100">
@@ -108,7 +109,7 @@ export default function App() {
         )}
       />
       <Row className="panel">
-        <PlayersPanel playerLives={playerLives} />
+        <PlayersPanel playersHp={playersHp} />
       </Row>
       <Row className="battle-container">
         <Col sm={2} className="panel">
@@ -119,7 +120,7 @@ export default function App() {
             enemy={enemy}
             enemyStatus={enemyStatus}
             hero={hero}
-            playerLives={playerLives}
+            playersHp={playersHp}
             message={message}
           />
           <Winner show={winner !== ''} winner={winner} />
