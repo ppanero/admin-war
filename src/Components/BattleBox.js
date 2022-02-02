@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Enemy from './Enemy';
-import Hero from './Hero';
+import Player from './Player';
 import TextBox from './TextBox';
 
 export default function BattleBox({
@@ -14,9 +13,14 @@ export default function BattleBox({
   return (
     <div className="px-2 mx-auto panel battle-box">
       {enemy && (
-        <Enemy name={enemy} lives={playerLives[enemy]} status={enemyStatus} />
+        <Player
+          name={enemy}
+          lives={playerLives[enemy]}
+          status={enemyStatus}
+          hero={false}
+        />
       )}
-      {hero && <Hero name={hero} lives={playerLives[hero]} />}
+      {hero && <Player name={hero} lives={playerLives[hero]} />}
       <div className="text-container">
         <div className="text-box">
           <div className="text-box-content">
