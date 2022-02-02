@@ -131,6 +131,7 @@ h5 {
 .oval {
   width: 200px;
   height: 100px;
+  top: 80px;
   background: #ccbaa1;
   border-radius: 50%;
   position: absolute;
@@ -138,12 +139,10 @@ h5 {
 }
 
 .enemy-container .oval {
-  top: 100px;
   left: -20px;
 }
 
 .hero-container .oval {
-  top: 80px;
   left: 45px;
 }
 
