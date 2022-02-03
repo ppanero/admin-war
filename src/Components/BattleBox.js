@@ -7,6 +7,7 @@ export default function BattleBox({
   enemy,
   enemyStatus,
   hero,
+  heroStatus,
   playersHp,
   message,
 }) {
@@ -20,7 +21,9 @@ export default function BattleBox({
           hero={false}
         />
       )}
-      {hero && <Player name={hero} lives={playersHp[hero]} />}
+      {hero && (
+        <Player name={hero} lives={playersHp[hero]} status={heroStatus} />
+      )}
       <div className="text-container">
         <div className="text-box">
           <div className="text-box-content">
@@ -36,6 +39,7 @@ BattleBox.propTypes = {
   enemy: PropTypes.string.isRequired,
   enemyStatus: PropTypes.string.isRequired,
   hero: PropTypes.string.isRequired,
+  heroStatus: PropTypes.string.isRequired,
   playersHp: PropTypes.objectOf(PropTypes.number).isRequired,
   message: PropTypes.string.isRequired,
 };
