@@ -15,6 +15,7 @@ export default function App() {
   const [warStarted, setWarStarted] = useState(false);
   const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
+  const [heroStatus, setHeroStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerHp = {};
   const tmpKillsCount = {};
@@ -39,19 +40,24 @@ export default function App() {
     return phrases[phraseIdx];
   };
 
-  const killPlayer = (killed, killer) => {
+  const killPlayer = (killed, killer, luck) => {
     setPlayerNames(playerNames.filter((name) => name !== killed));
     setKillsCount({
       ...killsCount,
       [killer]: killsCount[killer] + 1,
     });
-    setEnemyStatus(playerStatus('DEAD'));
+    if (luck) {
+      setEnemyStatus(playerStatus('DEAD'));
+    } else {
+      setHeroStatus(playerStatus('DEAD'));
+    }
   };
 
   const battle = () => {
     setEnemy('');
     setEnemyStatus(playerStatus('APPEAR'));
     setHero('');
+    setHeroStatus(playerStatus('APPEAR'));
     sleep(2000).then(() => {
       const enemyName = calculatePlayer();
       setMessage(`Un ${capitalize(enemyName)} salvaje aparecio!`);
@@ -64,17 +70,32 @@ export default function App() {
         setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
         setHero(heroName);
         sleep(2000).then(() => {
-          setMessage(getAttack(heroName));
-          setEnemyStatus(playerStatus('HIT'));
+          const luck = Math.random() < 0.5;
+          let attacker;
+          let attacked;
+          if (luck) {
+            attacker = heroName;
+            attacked = enemyName;
+          } else {
+            attacker = enemyName;
+            attacked = heroName;
+          }
+
+          setMessage(getAttack(attacker));
           sleep(2000).then(() => {
+            if (luck) {
+              setEnemyStatus(playerStatus('HIT'));
+            } else {
+              setHeroStatus(playerStatus('HIT'));
+            }
             const updateLife =
-              playersHp[enemyName] > 15 ? playersHp[enemyName] - 15 : 0;
+              playersHp[attacked] > 15 ? playersHp[attacked] - 15 : 0;
             setPlayerHp({
               ...playersHp,
-              [enemyName]: updateLife,
+              [attacked]: updateLife,
             });
             if (updateLife === 0) {
-              killPlayer(enemyName, heroName);
+              killPlayer(attacked, attacker, luck);
             }
           });
         });
@@ -120,6 +141,7 @@ export default function App() {
             enemy={enemy}
             enemyStatus={enemyStatus}
             hero={hero}
+            heroStatus={heroStatus}
             playersHp={playersHp}
             message={message}
           />
