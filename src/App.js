@@ -19,12 +19,15 @@ export default function App() {
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
   const tmpPlayerHp = {};
   const tmpKillsCount = {};
+  const tmpPlayersDiscovery = {};
   playerNames.forEach((name) => {
     tmpPlayerHp[name] = 100;
     tmpKillsCount[name] = 0;
+    tmpPlayersDiscovery[name] = false;
   });
   const [playersHp, setPlayerHp] = useState(tmpPlayerHp);
   const [killsCount, setKillsCount] = useState(tmpKillsCount);
+  const [playersDiscovery, setPlayersDiscovery] = useState(tmpPlayersDiscovery);
   const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
@@ -69,6 +72,11 @@ export default function App() {
         } while (heroName === enemyName);
         setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
         setHero(heroName);
+        setPlayersDiscovery({
+          ...playersDiscovery,
+          [heroName]: true,
+          [enemyName]: true,
+        });
         sleep(2000).then(() => {
           const luck = Math.random() < 0.5;
           let attacker;
@@ -130,7 +138,10 @@ export default function App() {
         )}
       />
       <Row className="panel">
-        <PlayersPanel playersHp={playersHp} />
+        <PlayersPanel
+          playersHp={playersHp}
+          playersDiscovery={playersDiscovery}
+        />
       </Row>
       <Row className="battle-container">
         <Col sm={2} className="panel">
