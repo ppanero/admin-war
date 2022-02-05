@@ -9,7 +9,7 @@ export default function PlayersPanel({ playersHp }) {
     const variant = getProgressBarVariant(hp);
     const imgStyle =
       hp > 0 ? 'player-avatar mx-2' : 'player-avatar mx-2 dead-player';
-    const img = imageLoader(`./${player}.jpeg`).default;
+    const img = imageLoader(`./${player}-silueta.jpeg`).default;
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
         <img className={imgStyle} src={img} alt="Player avatar" />
