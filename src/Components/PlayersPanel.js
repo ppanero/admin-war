@@ -11,7 +11,7 @@ export default function PlayersPanel({ playersHp, playersDiscovery }) {
     const deadPlayer = hp > 0 ? '' : 'dead-player';
     const imgName = playersDiscovery[player]
       ? `./${player}.jpeg`
-      : `./${player}-silueta.jpeg`;
+      : `./${player}-silhouette.jpeg`;
     const img = imageLoader(imgName).default;
 
     container.push(
