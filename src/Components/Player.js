@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ProgressBar } from 'react-bootstrap';
+import { Image, ProgressBar } from 'react-bootstrap';
 import {
   getProgressBarVariant,
   getAnimationForStatus,
@@ -33,7 +33,7 @@ export function AvatarBox({ name, anim, hero }) {
   return (
     <div className={`${hero ? 'ml-sm-5' : 'mr-sm-4'} avatar-box`}>
       <div className={`animate__animated ${anim}`}>
-        <img
+        <Image
           className="avatar"
           src={imageLoader(`./${name}.jpeg`).default}
           alt={hero ? 'Hero avatar' : 'Enemy avatar'}

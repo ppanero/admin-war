@@ -1,11 +1,11 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Modal } from 'react-bootstrap';
-import { imageLoader } from '../utils';
+import { Button, Form, Image, Modal } from 'react-bootstrap';
+import Logo from '../../assets/img/logoboton.png';
 
 export default function WarModal({ show, onClick }) {
   const interval = createRef();
-  const img = imageLoader(`./logoboton.png`).default;
+
   return (
     <Modal
       show={show}
@@ -26,7 +26,7 @@ export default function WarModal({ show, onClick }) {
               size="lg"
               onClick={onClick(interval)}
             >
-              <img src={img} alt="logo" />
+              <Image src={Logo} alt="logo" />
             </Button>
           </Form>
         </div>
