@@ -38,4 +38,7 @@ export function sleep(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-export const imageLoader = require.context('../assets/img/', false);
+export const playerImageLoader = require.context(
+  '../assets/img/players/',
+  false,
+);
