@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Modal } from 'react-bootstrap';
-import { imageLoader } from '../utils';
+import { playerImageLoader } from '../utils';
 import Crown from '../../assets/img/crown.png';
 
 export default function Winner({ show, winner }) {
@@ -12,7 +12,7 @@ export default function Winner({ show, winner }) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      {/* need to avoid imageLoader failure */}
+      {/* need to avoid playerImageLoader failure */}
       {show && (
         <Modal.Body className="war-bg">
           <div className="text-center winner-container">
@@ -22,7 +22,7 @@ export default function Winner({ show, winner }) {
             <div className="animate__animated animate__jackInTheBox">
               <Image
                 className="winner-img"
-                src={imageLoader(`./${winner}.jpeg`).default}
+                src={playerImageLoader(`./${winner}.jpeg`).default}
                 alt="Winner avatar"
               />
             </div>

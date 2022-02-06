@@ -4,7 +4,7 @@ import { Image, ProgressBar } from 'react-bootstrap';
 import {
   getProgressBarVariant,
   getAnimationForStatus,
-  imageLoader,
+  playerImageLoader,
   MAX_LIFE,
 } from '../utils';
 import playerStatus from '../playerStatus';
@@ -35,7 +35,7 @@ export function AvatarBox({ name, anim, hero }) {
       <div className={`animate__animated ${anim}`}>
         <Image
           className="avatar"
-          src={imageLoader(`./${name}.jpeg`).default}
+          src={playerImageLoader(`./${name}.jpeg`).default}
           alt={hero ? 'Hero avatar' : 'Enemy avatar'}
         />
       </div>

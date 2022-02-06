@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Image, ProgressBar, Row } from 'react-bootstrap';
-import { getProgressBarVariant, imageLoader } from '../utils';
+import { getProgressBarVariant, playerImageLoader } from '../utils';
 
 export default function PlayersPanel({ playersHp, playersDiscovery }) {
   const container = [];
@@ -12,7 +12,7 @@ export default function PlayersPanel({ playersHp, playersDiscovery }) {
     const imgName = playersDiscovery[player]
       ? `./${player}.jpeg`
       : `./${player}-silhouette.jpeg`;
-    const img = imageLoader(imgName).default;
+    const img = playerImageLoader(imgName).default;
 
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
