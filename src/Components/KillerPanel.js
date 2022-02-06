@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Row } from 'react-bootstrap';
 import { capitalize } from '../utils';
-import Logo from '../../assets/img/logo.png';
+import PokeWarsMuertes from '../../assets/img/pokewars-kills.png';
 
 export default function KillerPanel({ killsCount }) {
   const container = [];
@@ -18,7 +18,7 @@ export default function KillerPanel({ killsCount }) {
   return (
     <Row className="text-center">
       <h2>
-        <Image src={Logo} alt="Kills" />
+        <Image src={PokeWarsMuertes} alt="Kills" />
       </h2>
       <ul className="kills-list">{container}</ul>
     </Row>
