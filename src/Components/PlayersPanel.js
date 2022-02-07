@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Image, ProgressBar, Row } from 'react-bootstrap';
 import { getProgressBarVariant, playerImageLoader } from '../utils';
 
-export default function PlayersPanel({ playersHp, playersDiscovery }) {
-  const container = [];
+export default function PlayersPanel({ playersHp, players }) {
+  const tmpPlayersDiscovery = {};
+  players.forEach((name) => {
+    tmpPlayersDiscovery[name] = false;
+  });
+  const [playersDiscovery, setPlayersDiscovery] = useState(tmpPlayersDiscovery);
 
+  useEffect(() => {
+    setPlayersDiscovery({
+      ...playersDiscovery,
+      [heroName]: true,
+      [enemyName]: true,
+    });
+  });
+
+  const container = [];
   Object.entries(playersHp).forEach(([player, hp]) => {
     const variant = getProgressBarVariant(hp);
     const deadPlayer = hp > 0 ? '' : 'dead-player';
@@ -33,5 +46,5 @@ export default function PlayersPanel({ playersHp, playersDiscovery }) {
 
 PlayersPanel.propTypes = {
   playersHp: PropTypes.objectOf(PropTypes.number).isRequired,
-  playersDiscovery: PropTypes.objectOf(PropTypes.bool).isRequired,
+  players: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
