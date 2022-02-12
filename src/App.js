@@ -43,6 +43,11 @@ export default function App() {
     return phrases[phraseIdx];
   };
 
+  const getAttacks = (playerName) => {
+    const phrases = players[playerName];
+    return `${phrases[0]} \n ${phrases[1]} \n ${phrases[2]} \n ${phrases[3]}`;
+  };
+
   const killPlayer = (killed, killer, luck) => {
     setPlayerNames(playerNames.filter((name) => name !== killed));
     setKillsCount({
@@ -88,23 +93,37 @@ export default function App() {
             attacker = enemyName;
             attacked = heroName;
           }
+          setMessage(`${getAttacks(attacker)}`);
 
-          setMessage(getAttack(attacker));
           sleep(2000).then(() => {
+            setMessage(`¡${capitalize(attacker)} usó ${getAttack(attacker)}!`);
             if (luck) {
               setEnemyStatus(playerStatus('HIT'));
             } else {
               setHeroStatus(playerStatus('HIT'));
             }
-            const updateLife =
-              playersHp[attacked] > 15 ? playersHp[attacked] - 15 : 0;
-            setPlayerHp({
-              ...playersHp,
-              [attacked]: updateLife,
+            const damage = Math.floor(Math.random() * (50 - 5));
+            sleep(2000).then(() => {
+              if (damage < 10) {
+                setMessage('¡Es muy poco efectivo!');
+              } else if (damage > 25) {
+                setMessage('¡Es un golpe crítico!');
+              }
+              sleep(2000).then(() => {
+                const updateLife =
+                  playersHp[attacked] > damage
+                    ? playersHp[attacked] - damage
+                    : 0;
+                setPlayerHp({
+                  ...playersHp,
+                  [attacked]: updateLife,
+                });
+                if (updateLife === 0) {
+                  setMessage(`¡${capitalize(attacked)} ha caído!`);
+                  killPlayer(attacked, attacker, luck);
+                }
+              });
             });
-            if (updateLife === 0) {
-              killPlayer(attacked, attacker, luck);
-            }
           });
         });
       });
