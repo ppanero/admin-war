@@ -162,11 +162,11 @@ export default function App() {
       <Row className="panel">
         <PlayersContext.Provider
           value={{
-            heroName,
-            enemyName,
+            hero: hero,
+            enemy: enemy,
           }}
         >
-          <PlayersPanel playersHp={playersHp} playersDiscovery={playerNames} />
+          <PlayersPanel playersHp={playersHp} players={playerNames} />
         </PlayersContext.Provider>
       </Row>
       <Row className="battle-container">

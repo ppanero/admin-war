@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Image, ProgressBar, Row } from 'react-bootstrap';
 import { getProgressBarVariant, playerImageLoader } from '../utils';
+import PlayersContext from '../context/players';
 
 export default function PlayersPanel({ playersHp, players }) {
   const tmpPlayersDiscovery = {};
@@ -9,12 +10,14 @@ export default function PlayersPanel({ playersHp, players }) {
     tmpPlayersDiscovery[name] = false;
   });
   const [playersDiscovery, setPlayersDiscovery] = useState(tmpPlayersDiscovery);
+  const battle = useContext(PlayersContext);
 
   useEffect(() => {
+    console.log('test');
     setPlayersDiscovery({
       ...playersDiscovery,
-      [heroName]: true,
-      [enemyName]: true,
+      [battle.heroName]: true,
+      [battle.enemyName]: true,
     });
   });
 
