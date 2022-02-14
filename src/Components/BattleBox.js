@@ -16,14 +16,12 @@ export default function BattleBox({
       {enemy && (
         <Player
           name={enemy}
-          lives={playersHp[enemy]}
+          hp={playersHp[enemy]}
           status={enemyStatus}
           hero={false}
         />
       )}
-      {hero && (
-        <Player name={hero} lives={playersHp[hero]} status={heroStatus} />
-      )}
+      {hero && <Player name={hero} hp={playersHp[hero]} status={heroStatus} />}
       <div className="text-container">
         <div className="text-box">
           <div className="text-box-content">
