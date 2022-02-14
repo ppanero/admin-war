@@ -39,3 +39,7 @@ export function sleep(milliseconds) {
 }
 
 export const imageLoader = require.context('../assets/img/', false);
+
+export const MIN_DAMAGE = 5;
+
+export const MAX_DAMAGE = 45;
