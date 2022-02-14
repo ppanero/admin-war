@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
-import { capitalize, sleep, MAX_DAMAGE, MIN_DAMAGE } from './utils';
+import { capitalize, sleep, MAX_DAMAGE, MIN_DAMAGE, MAX_LIFE } from './utils';
 import playerStatus from './playerStatus';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
@@ -21,7 +21,7 @@ export default function App() {
   const tmpKillsCount = {};
   const tmpPlayersDiscovery = {};
   playerNames.forEach((name) => {
-    tmpPlayerHp[name] = 100;
+    tmpPlayerHp[name] = MAX_LIFE;
     tmpKillsCount[name] = 0;
     tmpPlayersDiscovery[name] = false;
   });
