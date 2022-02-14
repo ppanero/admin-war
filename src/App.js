@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import PlayersPanel from './Components/PlayersPanel';
 import data from '../assets/data/data.json';
 import KillerPanel from './Components/KillerPanel';
-import { capitalize, sleep } from './utils';
+import { capitalize, sleep, MAX_DAMAGE, MIN_DAMAGE } from './utils';
 import playerStatus from './playerStatus';
 import Winner from './Components/Winner';
 import BattleBox from './Components/BattleBox';
@@ -61,6 +61,9 @@ export default function App() {
     }
   };
 
+  const calculateDamage = () =>
+    Math.floor(Math.random() * (MAX_DAMAGE - MIN_DAMAGE)) + MIN_DAMAGE;
+
   const battle = () => {
     setEnemy('');
     setEnemyStatus(playerStatus('APPEAR'));
@@ -102,13 +105,20 @@ export default function App() {
             } else {
               setHeroStatus(playerStatus('HIT'));
             }
-            const damage = Math.floor(Math.random() * (50 - 5));
+            const damage = calculateDamage();
             sleep(2000).then(() => {
               if (damage < 10) {
-                setMessage('¡Es muy poco efectivo!');
+                setMessage(
+                  `¡Es muy poco efectivo! Causó ${damage} puntos de daño.`,
+                );
               } else if (damage > 25) {
-                setMessage('¡Es un golpe crítico!');
+                setMessage(
+                  `¡Es un golpe crítico! Causó ${damage} puntos de daño.`,
+                );
+              } else {
+                setMessage(`Causó ${damage} puntos de daño.`);
               }
+
               sleep(2000).then(() => {
                 const updateLife =
                   playersHp[attacked] > damage
