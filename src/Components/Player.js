@@ -9,15 +9,15 @@ import {
 } from '../utils';
 import playerStatus from '../playerStatus';
 
-export function LifeBox({ name, lives, variant }) {
+export function LifeBox({ name, hp, variant }) {
   return (
     <div className="player-info-box">
       <div className="d-flex justify-content-between align-items-center">
         <h2>{name.toUpperCase()}</h2>
-        <h5>{`HP ${lives}/${MAX_LIFE}`}</h5>
+        <h5>{`HP ${hp}/${MAX_LIFE}`}</h5>
       </div>
       <div className="d-flex justify-content-between align-items-center">
-        <ProgressBar now={lives} variant={variant} />
+        <ProgressBar now={hp} variant={variant} />
       </div>
     </div>
   );
@@ -25,7 +25,7 @@ export function LifeBox({ name, lives, variant }) {
 
 LifeBox.propTypes = {
   name: PropTypes.string.isRequired,
-  lives: PropTypes.number.isRequired,
+  hp: PropTypes.number.isRequired,
   variant: PropTypes.string.isRequired,
 };
 
@@ -50,8 +50,8 @@ AvatarBox.propTypes = {
   hero: PropTypes.bool.isRequired,
 };
 
-export default function Player({ name, lives, status, hero }) {
-  const variant = getProgressBarVariant(lives);
+export default function Player({ name, hp, status, hero }) {
+  const variant = getProgressBarVariant(hp);
   const anim = getAnimationForStatus(status);
 
   return (
@@ -59,11 +59,11 @@ export default function Player({ name, lives, status, hero }) {
       {hero ? (
         <div className="player-container hero-container">
           <AvatarBox name={name} anim={anim} hero={hero} />
-          <LifeBox name={name} lives={lives} variant={variant} />
+          <LifeBox name={name} hp={hp} variant={variant} />
         </div>
       ) : (
         <div className="player-container enemy-container">
-          <LifeBox name={name} lives={lives} variant={variant} />
+          <LifeBox name={name} hp={hp} variant={variant} />
           <AvatarBox name={name} anim={anim} hero={hero} />
         </div>
       )}
@@ -73,7 +73,7 @@ export default function Player({ name, lives, status, hero }) {
 
 Player.propTypes = {
   name: PropTypes.string.isRequired,
-  lives: PropTypes.number.isRequired,
+  hp: PropTypes.number.isRequired,
   status: PropTypes.string,
   hero: PropTypes.bool,
 };
