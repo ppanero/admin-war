@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Image, ProgressBar, Row } from 'react-bootstrap';
+import { Button, Col, Image, ProgressBar, Row } from 'react-bootstrap';
 import { getProgressBarVariant, playerImageLoader } from '../utils';
 
-export default function PlayersPanel({ playersHp, playersDiscovery }) {
+export default function PlayersPanel({ playersHp, playersDiscovery, onClick }) {
   const container = [];
 
   Object.entries(playersHp).forEach(([player, hp]) => {
@@ -16,14 +16,16 @@ export default function PlayersPanel({ playersHp, playersDiscovery }) {
 
     container.push(
       <Col lg="auto" className="avatar-box" key={player}>
-        <Image
-          className={`player-avatar mx-2 ${deadPlayer}`}
-          src={img}
-          alt="Player avatar"
-        />
-        <div className="px-2">
-          <ProgressBar now={hp} variant={variant} />
-        </div>
+        <Button className="btn-player" onClick={onClick(player)}>
+          <Image
+            className={`player-avatar mx-2 ${deadPlayer}`}
+            src={img}
+            alt="Player avatar"
+          />
+          <div className="px-2">
+            <ProgressBar now={hp} variant={variant} />
+          </div>
+        </Button>
       </Col>,
     );
   });
@@ -34,4 +36,5 @@ export default function PlayersPanel({ playersHp, playersDiscovery }) {
 PlayersPanel.propTypes = {
   playersHp: PropTypes.objectOf(PropTypes.number).isRequired,
   playersDiscovery: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onClick: PropTypes.func.isRequired,
 };

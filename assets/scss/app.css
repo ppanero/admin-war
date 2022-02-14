@@ -53,6 +53,16 @@ h5 {
   -webkit-filter: blur(8px);
 }
 
+.btn-player {
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+}
+
+.btn-player:hover {
+  background-color: transparent;
+}
+
 /* Kills List */
 
 .kills-list {

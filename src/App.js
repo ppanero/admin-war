@@ -14,7 +14,6 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [attacks, setAttacks] = useState([]);
   const [warStarted, setWarStarted] = useState(false);
-  const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
   const [heroStatus, setHeroStatus] = useState(playerStatus('APPEAR'));
   const [playerNames, setPlayerNames] = useState(Object.keys(players));
@@ -32,11 +31,6 @@ export default function App() {
   const [hero, setHero] = useState('');
   const [enemy, setEnemy] = useState('');
   const [winner, setWinner] = useState('');
-
-  const calculatePlayer = () => {
-    const playerIdx = Math.floor(Math.random() * playerNames.length);
-    return playerNames[playerIdx];
-  };
 
   const getAttacks = (playerName) => players[playerName];
 
@@ -63,76 +57,50 @@ export default function App() {
     Math.floor(Math.random() * (MAX_DAMAGE - MIN_DAMAGE)) + MIN_DAMAGE;
 
   const battle = () => {
-    setEnemy('');
-    setEnemyStatus(playerStatus('APPEAR'));
-    setHero('');
-    setHeroStatus(playerStatus('APPEAR'));
     sleep(2000).then(() => {
-      const enemyName = calculatePlayer();
-      setMessage(`Un ${capitalize(enemyName)} salvaje aparecio!`);
-      setEnemy(enemyName);
-      sleep(2000).then(() => {
-        let heroName;
-        do {
-          heroName = calculatePlayer();
-        } while (heroName === enemyName);
-        setMessage(`... ${capitalize(heroName)} te elijo a ti!`);
-        setHero(heroName);
-        setPlayersDiscovery({
-          ...playersDiscovery,
-          [heroName]: true,
-          [enemyName]: true,
-        });
+      const luck = Math.random() < 0.5;
+      let attacker;
+      let attacked;
+      if (luck) {
+        attacker = hero;
+        attacked = enemy;
+      } else {
+        attacker = enemy;
+        attacked = hero;
+      }
+      setAttacks(getAttacks(attacker));
+
+      sleep(3000).then(() => {
+        setAttacks([]);
+        setMessage(`¡${capitalize(attacker)} usó ${getAttack(attacker)}!`);
+        if (luck) {
+          setEnemyStatus(playerStatus('HIT'));
+        } else {
+          setHeroStatus(playerStatus('HIT'));
+        }
+        const damage = calculateDamage();
+
         sleep(2000).then(() => {
-          const luck = Math.random() < 0.5;
-          let attacker;
-          let attacked;
-          if (luck) {
-            attacker = heroName;
-            attacked = enemyName;
+          if (damage < 10) {
+            setMessage(
+              `¡Es muy poco efectivo! Causó ${damage} puntos de daño.`,
+            );
+          } else if (damage > 25) {
+            setMessage(`¡Es un golpe crítico! Causó ${damage} puntos de daño.`);
           } else {
-            attacker = enemyName;
-            attacked = heroName;
+            setMessage(`Causó ${damage} puntos de daño.`);
           }
 
-          setAttacks(getAttacks(attacker));
-
-          sleep(3000).then(() => {
-            setAttacks([]);
-            setMessage(`¡${capitalize(attacker)} usó ${getAttack(attacker)}!`);
-            if (luck) {
-              setEnemyStatus(playerStatus('HIT'));
-            } else {
-              setHeroStatus(playerStatus('HIT'));
+          sleep(2000).then(() => {
+            const updateLife =
+              playersHp[attacked] > damage ? playersHp[attacked] - damage : 0;
+            if (updateLife === 0) {
+              setMessage(`¡${capitalize(attacked)} ha caído!`);
+              killPlayer(attacked, attacker, luck);
             }
-            const damage = calculateDamage();
-            sleep(2000).then(() => {
-              if (damage < 10) {
-                setMessage(
-                  `¡Es muy poco efectivo! Causó ${damage} puntos de daño.`,
-                );
-              } else if (damage > 25) {
-                setMessage(
-                  `¡Es un golpe crítico! Causó ${damage} puntos de daño.`,
-                );
-              } else {
-                setMessage(`Causó ${damage} puntos de daño.`);
-              }
-
-              sleep(2000).then(() => {
-                const updateLife =
-                  playersHp[attacked] > damage
-                    ? playersHp[attacked] - damage
-                    : 0;
-                if (updateLife === 0) {
-                  setMessage(`¡${capitalize(attacked)} ha caído!`);
-                  killPlayer(attacked, attacker, luck);
-                }
-                setPlayerHp({
-                  ...playersHp,
-                  [attacked]: updateLife,
-                });
-              });
+            setPlayerHp({
+              ...playersHp,
+              [attacked]: updateLife,
             });
           });
         });
@@ -150,26 +118,53 @@ export default function App() {
 
   useEffect(() => {
     if (playerNames.length > 1 && warStarted) {
-      sleep(battleInterval).then(() => battle());
+      sleep(2000).then(() => {
+        setEnemy('');
+        setEnemyStatus(playerStatus('APPEAR'));
+        setHero('');
+        setHeroStatus(playerStatus('APPEAR'));
+      });
     }
-  }, [warStarted, playersHp]);
+  }, [playersHp]);
+
+  useEffect(() => {
+    if (enemy !== '') {
+      setMessage(`Un ${capitalize(enemy)} salvaje aparecio!`);
+      setPlayersDiscovery({
+        ...playersDiscovery,
+        [enemy]: true,
+      });
+    }
+  }, [enemy]);
+
+  useEffect(() => {
+    if (hero !== '') {
+      setMessage(`... ${capitalize(hero)} te elijo a ti!`);
+      setPlayersDiscovery({
+        ...playersDiscovery,
+        [hero]: true,
+      });
+      battle();
+    }
+  }, [hero]);
 
   return (
     <Container className="h-100">
-      <WarModal
-        show={!warStarted}
-        onClick={useCallback(
-          (interval) => () => {
-            setWarStarted(true);
-            setBattleInterval(interval.current.value * 60 * 1000);
-          },
-          [],
-        )}
-      />
+      <WarModal show={!warStarted} onClick={() => setWarStarted(true)} />
       <Row className="panel">
         <PlayersPanel
           playersHp={playersHp}
           playersDiscovery={playersDiscovery}
+          onClick={useCallback(
+            (player) => () => {
+              if (enemy === '') {
+                setEnemy(player);
+              } else if (enemy !== player) {
+                setHero(player);
+              }
+            },
+            [enemy, hero],
+          )}
         />
       </Row>
       <Row className="battle-container">
