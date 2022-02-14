@@ -5,6 +5,7 @@ import {
   getProgressBarVariant,
   getAnimationForStatus,
   imageLoader,
+  MAX_LIFE,
 } from '../utils';
 import playerStatus from '../playerStatus';
 
@@ -13,9 +14,9 @@ export function LifeBox({ name, lives, variant }) {
     <div className="player-info-box">
       <div className="d-flex justify-content-between align-items-center">
         <h2>{name.toUpperCase()}</h2>
+        <h5>{`HP ${lives}/${MAX_LIFE}`}</h5>
       </div>
       <div className="d-flex justify-content-between align-items-center">
-        <h5>HP</h5>
         <ProgressBar now={lives} variant={variant} />
       </div>
     </div>

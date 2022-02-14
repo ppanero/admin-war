@@ -43,3 +43,5 @@ export const imageLoader = require.context('../assets/img/', false);
 export const MIN_DAMAGE = 5;
 
 export const MAX_DAMAGE = 45;
+
+export const MAX_LIFE = 100;
