@@ -12,6 +12,7 @@ import WarModal from './Components/WarModal';
 export default function App() {
   const [players] = useState(data.players);
   const [message, setMessage] = useState('');
+  const [attacks, setAttacks] = useState([]);
   const [warStarted, setWarStarted] = useState(false);
   const [battleInterval, setBattleInterval] = useState(5);
   const [enemyStatus, setEnemyStatus] = useState(playerStatus('APPEAR'));
@@ -40,9 +41,9 @@ export default function App() {
   const getAttacks = (playerName) => players[playerName];
 
   const getAttack = (playerName) => {
-    const attacks = getAttacks(playerName);
-    const idx = Math.floor(Math.random() * attacks.length);
-    return attacks[idx];
+    const playerAttacks = getAttacks(playerName);
+    const idx = Math.floor(Math.random() * playerAttacks.length);
+    return playerAttacks[idx];
   };
 
   const killPlayer = (killed, killer, luck) => {
@@ -93,9 +94,11 @@ export default function App() {
             attacker = enemyName;
             attacked = heroName;
           }
-          setMessage(`${getAttacks(attacker)}`);
 
-          sleep(2000).then(() => {
+          setAttacks(getAttacks(attacker));
+
+          sleep(3000).then(() => {
+            setAttacks([]);
             setMessage(`¡${capitalize(attacker)} usó ${getAttack(attacker)}!`);
             if (luck) {
               setEnemyStatus(playerStatus('HIT'));
@@ -181,6 +184,7 @@ export default function App() {
             heroStatus={heroStatus}
             playersHp={playersHp}
             message={message}
+            attacks={attacks}
           />
           <Winner show={winner !== ''} winner={winner} />
         </Col>
