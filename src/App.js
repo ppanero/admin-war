@@ -37,15 +37,12 @@ export default function App() {
     return playerNames[playerIdx];
   };
 
-  const getAttack = (playerName) => {
-    const phrases = players[playerName];
-    const phraseIdx = Math.floor(Math.random() * phrases.length);
-    return phrases[phraseIdx];
-  };
+  const getAttacks = (playerName) => players[playerName];
 
-  const getAttacks = (playerName) => {
-    const phrases = players[playerName];
-    return `${phrases[0]} \n ${phrases[1]} \n ${phrases[2]} \n ${phrases[3]}`;
+  const getAttack = (playerName) => {
+    const attacks = getAttacks(playerName);
+    const idx = Math.floor(Math.random() * attacks.length);
+    return attacks[idx];
   };
 
   const killPlayer = (killed, killer, luck) => {
