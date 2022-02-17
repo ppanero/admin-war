@@ -124,14 +124,14 @@ export default function App() {
                   playersHp[attacked] > damage
                     ? playersHp[attacked] - damage
                     : 0;
-                setPlayerHp({
-                  ...playersHp,
-                  [attacked]: updateLife,
-                });
                 if (updateLife === 0) {
                   setMessage(`¡${capitalize(attacked)} ha caído!`);
                   killPlayer(attacked, attacker, luck);
                 }
+                setPlayerHp({
+                  ...playersHp,
+                  [attacked]: updateLife,
+                });
               });
             });
           });
