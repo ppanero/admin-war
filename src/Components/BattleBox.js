@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AttacksBox from './AttacksBox';
 import Player from './Player';
 import TextBox from './TextBox';
 
@@ -10,6 +11,7 @@ export default function BattleBox({
   heroStatus,
   playersHp,
   message,
+  attacks,
 }) {
   return (
     <div className="px-2 mx-auto panel battle-box">
@@ -25,7 +27,13 @@ export default function BattleBox({
       <div className="text-container">
         <div className="text-box">
           <div className="text-box-content">
-            {enemy && <TextBox message={message} />}
+            <div className="battle-text-content">
+              {attacks.length > 0 ? (
+                <AttacksBox attacks={attacks} />
+              ) : (
+                <TextBox message={message} />
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -39,5 +47,11 @@ BattleBox.propTypes = {
   hero: PropTypes.string.isRequired,
   heroStatus: PropTypes.string.isRequired,
   playersHp: PropTypes.objectOf(PropTypes.number).isRequired,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
+  attacks: PropTypes.arrayOf(PropTypes.string),
+};
+
+BattleBox.defaultProps = {
+  message: '',
+  attacks: [],
 };
