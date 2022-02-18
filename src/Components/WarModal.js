@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Image, Modal } from 'react-bootstrap';
-import PokeWars from '../../assets/img/pokewars.png';
+import PokeWars from '../../assets/img/team-rocket-pokewars.png';
 
 export default function WarModal({ show, onClick }) {
   const interval = createRef();
@@ -26,7 +26,12 @@ export default function WarModal({ show, onClick }) {
               size="lg"
               onClick={onClick(interval)}
             >
-              <Image src={PokeWars} alt="Logo PokeWars" />
+              <Image
+                src={PokeWars}
+                alt="Logo PokeWars"
+                width="400"
+                height="400"
+              />
             </Button>
           </Form>
         </div>
